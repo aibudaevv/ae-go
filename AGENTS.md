@@ -38,6 +38,7 @@ external infrastructure instead of silently skipping a check.
 
 | When changing… | Read before editing… |
 | --- | --- |
+| planning, estimating, or decomposing a task | [Task Planning and Review Units](docs/development/planning.md) |
 | any `.go` file, package API, names, declarations, control flow, or formatting | [Go Style](docs/development/go-style.md) |
 | layer boundaries, use cases, ports, adapters, dependency wiring | [Clean Architecture](docs/architecture/clean-architecture.md) |
 | decision logic or tests | [Table-Driven Tests and Mc/DC](docs/testing/mcdc.md) |
@@ -49,6 +50,9 @@ external infrastructure instead of silently skipping a check.
 
 ## Non-negotiable engineering rules
 
+- Split implementation plans into logically complete, independently reviewable
+  units of no more than 300 changed lines. Follow the documented exceptions and
+  record the reason when a unit cannot be split safely.
 - Follow Clean Architecture unless an explicit task requirement conflicts. Keep
   dependencies pointing inward; do not leak transport, database, queue, or vendor
   SDK types into `domain` or `app`.
