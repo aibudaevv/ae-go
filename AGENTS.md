@@ -16,6 +16,30 @@ properties.
    push, and other external writes behind explicit approval.
 5. Never claim a check passed unless it was run and its result was observed.
 
+## Task workflow
+
+Before modifying the repository, classify the requested work as small or
+non-trivial using the [Task Workflow](tasks/README.md).
+
+Small work does not require task artifacts. For every non-trivial task:
+
+1. Read `tasks/README.md` completely before implementation.
+2. Allocate the next repository-wide, non-reusable `task-NNN` identifier from
+   active tasks, `tasks/old/`, repository history, known refs, and worktrees.
+3. Ask permission to create a worktree. If refused, continue in the current
+   checkout. Then create `TASK.md` from `tasks/templates/TASK.md` and
+   `GRILLING.md` from `tasks/templates/GRILLING.md`.
+4. Create `DESIGN.md`, invoke `$grilling` after its first draft, resolve every
+   material question, and obtain design approval. Then create `PLAN.md`.
+5. Set `Ready` only when all four task artifacts exist and the plan is
+   actionable. Keep `TASK.md` as a compact status and evidence manifest; do not
+   duplicate design, plan, or step-level progress in it.
+6. Execute independently reviewable units of at most 300 changed lines. After
+   verifying each unit, request permission for its single commit; do not start
+   the next unit without a successful permitted commit.
+7. Run final verification and review before the final unit commit. That commit
+   may also set `Completed` and move the task intact to `tasks/old/`.
+
 ## Commands
 
 Run commands from the module root unless repository-specific instructions say
@@ -40,6 +64,7 @@ external infrastructure instead of silently skipping a check.
 | --- | --- |
 | planning, estimating, or decomposing a task | [Task Planning and Review Units](docs/development/planning.md) |
 | any `.go` file, package API, names, declarations, control flow, or formatting | [Go Style](docs/development/go-style.md) |
+| system boundaries, runtime components, data ownership, or important integrations | [System Architecture](docs/architecture/README.md) |
 | layer boundaries, use cases, ports, adapters, dependency wiring | [Clean Architecture](docs/architecture/clean-architecture.md) |
 | decision logic or tests | [Table-Driven Tests and Mc/DC](docs/testing/mcdc.md) |
 | HTTP, gRPC, protobuf, events, queues, retries, or idempotency | [HTTP, RPC, and Event Contracts](docs/contracts/http-rpc-events.md) |
