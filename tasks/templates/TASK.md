@@ -35,7 +35,18 @@ Reference criteria from `DESIGN.md` without copying their requirement text.
 
 - Record unavailable checks, known gaps, and accepted constraints.
 
-## Blocker and next action
+## Resume checkpoint
 
-State the blocker or the single next action. Detailed steps belong in
-`PLAN.md`; step-level progress belongs in the temporary execution ledger.
+| Field | Value |
+| --- | --- |
+| Current unit | Unit 1 |
+| Plan position | `PLAN.md`, Unit 1, Step 1 |
+| Last completed | Task prepared; implementation not started |
+| Last verification | Not run |
+| Next action | Start Unit 1, Step 1 |
+| Blocker | None |
+| Uncommitted state | None |
+
+Keep this checkpoint sufficient for another agent to resume in the same
+workspace. Detailed instructions remain in `PLAN.md`; the full step-by-step
+history remains in the temporary execution ledger.

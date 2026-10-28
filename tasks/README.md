@@ -79,12 +79,32 @@ the initial task artifacts.
 - `PLAN.md` owns units, files, interfaces, TDD steps, verification commands,
   and expected results.
 - `TASK.md` is a compact manifest of task status, artifact links, unit status,
-  acceptance results, observed evidence, blockers, and the next action.
+  acceptance results, observed evidence, and the resume checkpoint.
 - `.superpowers/sdd/.../progress.md` is a temporary detailed execution ledger.
 
 Do not copy detailed scope, implementation instructions, planned checks, or
-step-level progress into `TASK.md`. It also does not store commit hashes: a
-commit cannot contain its own stable hash.
+the full step-by-step history into `TASK.md`. Keep only the current `PLAN.md`
+position and enough observed state to resume safely. `TASK.md` also does not
+store commit hashes: a commit cannot contain its own stable hash.
+
+## Maintain the resume checkpoint
+
+Initialize the checkpoint when creating the task. Update it when starting a
+unit and after a meaningful transition such as an expected failing test, a
+completed implementation, a passing verification, a migration or generation,
+or a decision that changes the next action. Also update it on an error or
+blocker, before pausing, handing off, or ending a session, before requesting a
+commit, and after a successful commit when selecting the next unit.
+
+Record the current unit, exact `PLAN.md` position, last completed result, last
+observed verification, single next action, blocker, and relevant uncommitted
+state. Do not update the checkpoint after routine file reads, searches,
+formatting, or other actions that do not change how work should resume.
+
+Before a unit commit the checkpoint is local working-tree state and supports a
+restart in the same workspace. The unit commit makes the checkpoint durable in
+Git. Do not claim that an uncommitted checkpoint survives loss of the
+workspace.
 
 ## Lifecycle
 
@@ -110,11 +130,12 @@ Unit statuses are `Pending`, `In Progress`, `Blocked`, and `Done`. A status of
 
 For each unit:
 
-1. Set the task and unit to `In Progress`.
+1. Set the task and unit to `In Progress` and point the resume checkpoint to
+   the unit's first `PLAN.md` step.
 2. Follow the unit's `PLAN.md` steps and applicable engineering rules.
 3. Run every required verification and observe its result.
-4. Update `TASK.md` with unit-level evidence and the next action, leaving the
-   unit `In Progress`.
+4. Update `TASK.md` with unit-level evidence and a current resume checkpoint,
+   leaving the unit `In Progress`.
 5. Ask for explicit permission to commit the unit.
 6. If permission is refused or absent, mark the task and unit `Blocked` and do
    not begin another unit.
@@ -125,8 +146,9 @@ For each unit:
    Unit: N
    ```
 
-8. Treat `Done` as effective only after commit success. On failure, retain or
-   restore a resumable `Blocked` state and keep the ledger.
+8. Treat `Done` as effective only after commit success. Then point the
+   checkpoint to the next unit. On failure, retain or restore a resumable
+   `Blocked` state and keep the ledger.
 
 Permission for a unit commit does not authorize push, merge, PR creation,
 deployment, production changes, or another external write.
