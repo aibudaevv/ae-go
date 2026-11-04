@@ -5,14 +5,19 @@ message. Do not create a commit unless the user or repository workflow has
 explicitly authorized it.
 
 Commit messages follow
-[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
-with one mandatory extension: the subject contains the task identifier.
+[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
+The subject contains the task identifier for non-trivial tasks and for small
+work when the user supplied one.
 
-## Required subject format
+## Subject formats
 
 ```text
 <type>[optional scope][!]: <TASK-ID> <description>
+<type>[optional scope][!]: <description>
 ```
+
+The first form applies when a task ID is present. The second applies only to
+small standalone work for which the user did not supply an ID.
 
 Examples:
 
@@ -21,6 +26,7 @@ feat(api): TASK-123 add event creation endpoint
 fix(storage): TASK-456 prevent duplicate records
 docs: TASK-612 clarify migration procedure
 refactor(core)!: TASK-789 replace legacy contract
+docs: clarify migration procedure
 ```
 
 Rules:
@@ -29,13 +35,15 @@ Rules:
 - `scope` is optional. When present, it is a short noun naming the affected
   area, not the task identifier.
 - `!` immediately before `:` marks a breaking change.
-- `TASK-ID` is mandatory and uses the identifier provided by the task tracker
-  or user. Do not invent an identifier.
+- `TASK-ID` is mandatory for non-trivial tasks. Use the identifier supplied by
+  the user or, when absent, the `task-NNN` allocated by the task workflow.
+- For small standalone work, use a user-supplied identifier when present;
+  otherwise omit it instead of allocating `task-NNN` or inventing a placeholder.
 - `description` is mandatory, concise, imperative, lower-case, and has no
   trailing period.
 
 The type must remain at the beginning so Conventional Commits tooling can parse
-the message. These subjects are invalid:
+the message. For work that requires an identifier, these subjects are invalid:
 
 ```text
 TASK-123 feat(api): add event creation endpoint
@@ -44,11 +52,7 @@ feat(api): add event creation endpoint
 ```
 
 The first puts non-standard text before the type, the second consumes the scope
-with tracking metadata, and the third omits the mandatory task identifier.
-
-If no task identifier is available, ask for it before committing. Do not use
-placeholders such as `NO-TICKET`, `TASK-000`, or `XXX` unless repository-specific
-instructions explicitly define such a convention.
+with tracking metadata, and the third omits the required task identifier.
 
 ## Types
 
@@ -107,8 +111,8 @@ Refs: TASK-123
 Reviewed-by: Example Reviewer
 ```
 
-The task identifier must remain in the subject even when it is repeated in a
-footer.
+When a task identifier is used, it must remain in the subject even when it is
+repeated in a footer.
 
 ## Breaking changes
 
@@ -144,7 +148,7 @@ Before creating or proposing a commit, confirm that:
 
 1. explicit authorization to commit exists;
 2. the subject matches the required grammar;
-3. the task identifier is real and appears in the subject;
+3. the task identifier is real and appears in the subject when required;
 4. the type and optional scope describe the actual diff;
 5. breaking behavior is marked and explained;
 6. the commit contains one coherent, verified change.

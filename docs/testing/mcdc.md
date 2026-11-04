@@ -66,11 +66,16 @@ that rejects invalid input.
 
 ## Test scope by layer
 
-- `domain` tests are pure, deterministic unit tests for invariants and decisions.
-- `app` tests use fakes for ports and verify use-case behavior, error mapping,
-  cancellation, and retry/transaction decisions.
-- `adapter` tests are contract or integration tests for HTTP, gRPC, SQL, queues,
-  and other external boundaries.
+- `controller` tests verify parsing, validation, authentication context, and
+  response or error mapping without real external systems.
+- `service` tests use fakes for gateways and provider capabilities to verify
+  workflows, permissions, side-effect order, cancellation, and retry decisions.
+- `domain/data gateway` tests use a fake database executor to verify persistence
+  operation selection, input mapping, result conversion, and error forwarding.
+- `dbmodel` and database-executor integration tests verify SQL, row mapping,
+  transactions, constraints, and stable persistence errors.
+- Provider-adapter tests verify external capability contracts and provider error
+  mapping without duplicating application decisions.
 - End-to-end tests cover critical integrations, not every branch already proven
   by lower layers.
 

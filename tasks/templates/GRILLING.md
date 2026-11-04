@@ -1,9 +1,11 @@
-# Grilling for `task-NNN`: Short title
+# Grilling for `<TASK-ID>`: Short title
 
 > **Required:** Populate and review this file by invoking the `$grilling`
-> skill. Do not substitute an ordinary self-review or another skill. If the
-> skill is unavailable, stop and report the missing prerequisite. Run it after
-> the first `DESIGN.md` draft and before design approval.
+> skill supplied by the Grill Me installation. Complete the `Verify
+> prerequisites` section in the repository's `tasks/README.md` first.
+> Do not substitute an ordinary self-review or another skill. If the skill is
+> unavailable, stop and report the missing prerequisite. Run it after the first
+> `DESIGN.md` draft and before design approval.
 
 ## Requirements and ambiguities
 

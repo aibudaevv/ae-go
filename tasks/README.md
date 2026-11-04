@@ -14,13 +14,49 @@ A request is small only when all of the following are true:
 - It does not need multiple independently verifiable implementation units.
 - It has an obvious verification path.
 
-Small standalone work uses neither a task directory nor units. If a small
-change belongs to a non-trivial task, it is a unit of that task. Treat any
-uncertain classification as non-trivial.
+Small standalone work uses neither a task directory nor units and does not
+allocate a `task-NNN` identifier. Use a user-supplied identifier when present;
+otherwise its commit subject omits one. If a small change belongs to a
+non-trivial task, it is a unit of that task. Treat any uncertain classification
+as non-trivial.
+
+## Verify prerequisites
+
+Codex is the reference runtime for this workflow. Before starting the first
+non-trivial task, install the latest available releases from their canonical
+sources:
+
+- Install Superpowers from `https://github.com/obra/superpowers`. In Codex,
+  open `/plugins`, find Superpowers, select `Install plugin`, and start a new
+  chat. It supplies the `brainstorming` and `writing-plans` workflows.
+- Use `$skill-installer` to install both `skills/productivity/grill-me` and
+  `skills/productivity/grilling` from
+  `https://github.com/mattpocock/skills`, then start a new Codex session.
+  `grill-me` is the entry wrapper; this workflow invokes `$grilling`.
+
+These dependencies intentionally track their latest releases rather than a
+pinned version. Their discoverable capabilities are the compatibility gate.
+After classifying work as non-trivial and before selecting an identifier,
+confirm that the current session's skill catalog advertises all of:
+
+- `superpowers:brainstorming`;
+- `superpowers:writing-plans`;
+- `grilling`.
+
+If any capability is absent or cannot be loaded, stop and report its name with
+the applicable installation instructions. Do not select a task identifier,
+create a worktree or task artifacts, or substitute an ordinary self-review.
+Small standalone work skips this preflight. Repeat it when resuming a task in
+`Draft` or returning a task to `Draft` after a material change.
+
+Another agent runtime may be used only when it exposes equivalent workflows
+and can perform the same capability preflight; Codex is the only runtime with
+installation steps verified by this template.
 
 ## Task, unit, and step
 
-- A task is the user-visible outcome identified by `task-NNN`.
+- A task is the user-visible outcome identified by the user-supplied ID or by
+  a harness-allocated `task-NNN`.
 - A unit is one independently reviewable result inside a task, limited to 300
   changed lines unless the repository planning rules document an exception.
 - A step is one concrete `PLAN.md` action inside a unit.
@@ -29,21 +65,26 @@ Each unit normally maps to one verified and permitted commit.
 
 ## Allocate an identifier
 
-Identifiers begin with `task-001` and are never reused. Allocation is
-serialized: establish one allocation owner until the directory is created or
-the attempt is abandoned.
+Use the task identifier supplied by the user. If none was supplied, allocate a
+`task-NNN`; generated identifiers begin with `task-001`. Task identifiers are
+never reused.
 
-Before allocation, inspect active task directories, `tasks/old/`, repository history,
-all known local and remote refs, and registered worktrees in the current clone.
-Choose one greater than the highest identifier found, then repeat the check
-immediately before the first unit commit.
+Harness allocation is serialized: establish one allocation owner until the
+directory is created or the attempt is abandoned.
+
+Before using a user-supplied identifier, confirm it is not already used in
+active task directories, `tasks/old/`, repository history, known refs, or
+registered worktrees. Before allocating a generated identifier, inspect the
+same sources, choose one greater than the highest `task-NNN`, then repeat the
+check immediately before the first unit commit.
 
 This lightweight harness cannot reserve an ID atomically across disconnected
 clones. If later integration reveals an external collision, renumber the
 unmerged task to the next free ID before integration. If known state is
 ambiguous, stop for human confirmation rather than guessing.
 
-Name the directory `task-NNN-short-name` using a concise lowercase slug.
+Name the directory `<TASK-ID>-short-name` using the selected identifier and a
+concise lowercase slug.
 Cancelled, deleted, missing, active, and archived identifiers remain spent.
 
 ## Choose the workspace
@@ -61,7 +102,8 @@ workspace question is needed.
 3. Invoke `$grilling`, record its questions and decisions in `GRILLING.md`, and
    revise the design. Do not substitute ordinary self-review or another skill.
 4. Stop while any material question remains unresolved.
-5. Obtain human approval of `DESIGN.md`.
+5. Obtain human approval of the current `DESIGN.md`. A material change after
+   approval invalidates it and requires renewed approval.
 6. Create `PLAN.md` through the writing-plans workflow.
 7. Set status `Ready` only when all four files exist, the design is approved,
    material grilling questions are resolved, and the plan is actionable.
@@ -134,15 +176,20 @@ For each unit:
    the unit's first `PLAN.md` step.
 2. Follow the unit's `PLAN.md` steps and applicable engineering rules.
 3. Run every required verification and observe its result.
+   If a required verification is unavailable, keep the task and unit `Blocked`
+   until the user explicitly accepts the remaining risk. Record the check,
+   reason, and acceptance in `TASK.md`.
 4. Update `TASK.md` with unit-level evidence and a current resume checkpoint,
    leaving the unit `In Progress`.
-5. Ask for explicit permission to commit the unit.
+5. Show the current unit diff and ask for explicit permission to commit it.
+   A material change to that diff invalidates the permission and requires
+   renewed permission.
 6. If permission is refused or absent, mark the task and unit `Blocked` and do
    not begin another unit.
 7. If granted, prepare `Done` and create one commit with trailers:
 
    ```text
-   Task: task-NNN
+   Task: <TASK-ID>
    Unit: N
    ```
 
@@ -178,7 +225,9 @@ While the task remains `In Progress`:
 5. Create the final unit commit with the required task and unit trailers.
 6. Treat completion and archival as effective only after commit success; on
    failure, retain or restore the active `Blocked` state.
-7. Delete the temporary execution ledger only after commit success.
+7. Before deleting the ledger, transfer any decision needed to understand the
+   final implementation or its limitations to the authoritative task artifact.
+8. Delete the temporary execution ledger only after commit success.
 
 Closure does not require a separate unit. For a one-unit task, its only commit
 may introduce the complete record directly under `tasks/old/`.

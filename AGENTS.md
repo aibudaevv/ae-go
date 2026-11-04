@@ -24,20 +24,24 @@ non-trivial using the [Task Workflow](tasks/README.md).
 Small work does not require task artifacts. For every non-trivial task:
 
 1. Read `tasks/README.md` completely before implementation.
-2. Allocate the next repository-wide, non-reusable `task-NNN` identifier from
+2. Run its prerequisite preflight against the current session's skill catalog.
+   If it fails, stop before allocating an ID, creating a worktree, or creating
+   task artifacts.
+3. Use the task identifier supplied by the user. If none was supplied,
+   allocate the next repository-wide, non-reusable `task-NNN` identifier from
    active tasks, `tasks/old/`, repository history, known refs, and worktrees.
-3. Ask permission to create a worktree. If refused, continue in the current
+4. Ask permission to create a worktree. If refused, continue in the current
    checkout. Then create `TASK.md` from `tasks/templates/TASK.md` and
    `GRILLING.md` from `tasks/templates/GRILLING.md`.
-4. Create `DESIGN.md`, invoke `$grilling` after its first draft, resolve every
+5. Create `DESIGN.md`, invoke `$grilling` after its first draft, resolve every
    material question, and obtain design approval. Then create `PLAN.md`.
-5. Set `Ready` only when all four task artifacts exist and the plan is
+6. Set `Ready` only when all four task artifacts exist and the plan is
    actionable. Keep `TASK.md` as a compact status and evidence manifest; do not
    duplicate design, plan, or step-level progress in it.
-6. Execute independently reviewable units of at most 300 changed lines. After
+7. Execute independently reviewable units of at most 300 changed lines. After
    verifying each unit, request permission for its single commit; do not start
    the next unit without a successful permitted commit.
-7. Run final verification and review before the final unit commit. That commit
+8. Run final verification and review before the final unit commit. That commit
    may also set `Completed` and move the task intact to `tasks/old/`.
 
 ## Commands
@@ -65,7 +69,7 @@ external infrastructure instead of silently skipping a check.
 | planning, estimating, or decomposing a task | [Task Planning and Review Units](docs/development/planning.md) |
 | any `.go` file, package API, names, declarations, control flow, or formatting | [Go Style](docs/development/go-style.md) |
 | system boundaries, runtime components, data ownership, or important integrations | [System Architecture](docs/architecture/README.md) |
-| layer boundaries, use cases, ports, adapters, dependency wiring | [Clean Architecture](docs/architecture/clean-architecture.md) |
+| layer boundaries, use cases, ports, adapters, dependency wiring | [Pragmatic Layered Architecture](docs/architecture/clean-architecture.md) |
 | decision logic or tests | [Table-Driven Tests and Mc/DC](docs/testing/mcdc.md) |
 | HTTP, gRPC, protobuf, events, queues, retries, or idempotency | [HTTP, RPC, and Event Contracts](docs/contracts/http-rpc-events.md) |
 | SQL, storage, schema, backfill, or migrations | [Data Access and Migrations](docs/data/migrations.md) |
@@ -78,9 +82,12 @@ external infrastructure instead of silently skipping a check.
 - Split implementation plans into logically complete, independently reviewable
   units of no more than 300 changed lines. Follow the documented exceptions and
   record the reason when a unit cannot be split safely.
-- Follow Clean Architecture unless an explicit task requirement conflicts. Keep
-  dependencies pointing inward; do not leak transport, database, queue, or vendor
-  SDK types into `domain` or `app`.
+- Follow the documented pragmatic layered architecture. Keep request handling
+  in controllers, workflows in services, persistence selection in domain/data
+  gateways, and SQL plus driver connections in database packages. Gateways may
+  use shared DTOs, persistence operations, and the database executor. Do not add
+  new controller or service dependencies on database models; existing cases are
+  legacy exceptions. Keep transport and provider SDK types inside adapters.
 - Write table-driven tests. For every changed non-trivial decision, demonstrate
   Mc/DC: each atomic condition independently changes the outcome, or a documented
   domain invariant explains why independent variation is impossible.
@@ -100,8 +107,9 @@ A change is complete only when all applicable conditions hold:
 1. It implements the requested behavior and stays within approved scope.
 2. Relevant table-driven tests, Mc/DC pairs, and integration or contract checks
    cover changed behavior; a new regression test fails without the source change.
-3. Relevant build, test, module, lint, migration, and integration checks ran, or
-   every unavailable check is explicitly reported.
+3. Relevant build, test, module, lint, migration, and integration checks ran.
+   If a required check is unavailable, report the check and reason; completion
+   requires the user's explicit acceptance of the remaining risk.
 4. Contracts, migrations, configuration examples, metrics, dashboards,
    alerts, or documentation affected by the change are updated.
 5. The diff has no unrelated refactoring, generated noise, secrets, or accidental

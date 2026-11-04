@@ -1,8 +1,8 @@
-# `task-NNN`: Short title
+# `<TASK-ID>`: Short title
 
 | Field | Value |
 | --- | --- |
-| ID | `task-NNN` |
+| ID | `<TASK-ID>` |
 | Status | `Draft` |
 | Created | `YYYY-MM-DD` |
 | Workspace | Worktree path or current checkout |
@@ -39,13 +39,13 @@ Reference criteria from `DESIGN.md` without copying their requirement text.
 
 | Field | Value |
 | --- | --- |
-| Current unit | Unit 1 |
-| Plan position | `PLAN.md`, Unit 1, Step 1 |
-| Last completed | Task prepared; implementation not started |
+| Current unit | Not selected |
+| Plan position | `DESIGN.md`, initial draft |
+| Last completed | Task manifest initialized; design not started |
 | Last verification | Not run |
-| Next action | Start Unit 1, Step 1 |
+| Next action | Draft `DESIGN.md` through the brainstorming workflow |
 | Blocker | None |
-| Uncommitted state | None |
+| Uncommitted state | Initial task artifacts |
 
 Keep this checkpoint sufficient for another agent to resume in the same
 workspace. Detailed instructions remain in `PLAN.md`; the full step-by-step

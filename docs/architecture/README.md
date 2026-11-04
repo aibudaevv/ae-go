@@ -27,7 +27,8 @@ a topic needs independent ownership and maintenance.
 ## Code architecture
 
 Layer responsibilities, dependency direction, ports, adapters, and package
-guidance are defined in [Clean Architecture](clean-architecture.md).
+guidance are defined in
+[Pragmatic Layered Architecture](clean-architecture.md).
 
 ## Architecture decisions
 
