@@ -59,7 +59,7 @@ installation steps verified by this template.
   a harness-generated ID.
 - A unit is one independently reviewable result inside a task, limited to 300
   changed lines unless the repository planning rules document an exception.
-- A step is one concrete `PLAN.md` action inside a unit.
+- A step is one concrete plan action inside a unit.
 
 Each unit normally maps to one verified and permitted commit.
 
@@ -78,53 +78,48 @@ Existing identifiers, including historical `task-NNN` IDs, remain valid.
 
 ## Choose the workspace
 
-After allocating the ID, ask for permission to create a worktree. If granted,
-create it and perform all task work there. If refused, automatically continue
-in the current checkout; the refusal authorizes that fallback and no second
-workspace question is needed.
+Honor an existing workspace choice in the session. Otherwise ask for permission
+to create a worktree. If granted, work there; if refused, continue in the current
+checkout without asking again.
 
 ## Create and design the task
 
-1. Create the task directory with copies of `templates/TASK.md` and
-   `templates/GRILLING.md`; set status `Draft`.
+1. Create the task directory with a copy of `templates/TASK.md`; set `Draft`.
 2. Review open entries in [`IMPROVEMENTS.md`](IMPROVEMENTS.md) whose area or
-   trigger matches the proposed scope, then create the first `DESIGN.md` draft
-   through the brainstorming workflow. Do not scan archived tasks for promoted
-   knowledge; its canonical owner is authoritative.
-3. Invoke `$grilling`, record its questions and decisions in `GRILLING.md`, and
-   revise the design. Do not substitute ordinary self-review or another skill.
-   For every relevant improvement, record whether the design promotes, rejects,
-   or defers it and why.
+   trigger matches the scope, then draft the `Design` section through the
+   brainstorming workflow. Promoted knowledge lives in its canonical owner;
+   do not scan archived tasks to recover it.
+3. Invoke `$grilling`, record material questions and decisions in the task,
+   and revise the design. Do not substitute another workflow. Record the
+   disposition of relevant improvements without repeating their evidence.
 4. Stop while any material question remains unresolved.
-5. Obtain human approval of the current `DESIGN.md`. A material change after
-   approval invalidates it and requires renewed approval.
-6. Create `PLAN.md` through the writing-plans workflow.
-7. Set status `Ready` only when all four files exist, the design is approved,
-   material grilling questions are resolved, and the plan is actionable.
+5. Obtain design approval. Approval of a concrete proposal already given in the
+   session counts; record it rather than asking again. Material changes require
+   renewed approval.
+6. Write the `Plan` through the writing-plans workflow, following the repository
+   planning rules. Keep commands, expected results, and dependencies actionable.
+7. Set `Ready` when the design is approved, material questions are resolved, and
+   the plan is actionable.
 
-There is no separate planning commit. The first unit commit also introduces
-the initial task artifacts.
+The first unit commit includes the task record; no planning-only commit is
+required.
 
 ## Artifact authority
 
-- `DESIGN.md` owns intent, requirements, scope, architecture decisions, and
-  acceptance criteria identified as `AC-1`, `AC-2`, and so on.
-- `GRILLING.md` owns challenges, assumptions, alternatives, risks, decisions,
-  and unresolved questions. Preserve history; append or explicitly supersede
-  decisions instead of silently rewriting them.
-- `PLAN.md` owns units, files, interfaces, TDD steps, verification commands,
-  and expected results.
-- `TASK.md` is a compact manifest of task status, artifact links, unit status,
-  acceptance results, observed evidence, the compounding review, and the resume
-  checkpoint.
-- `IMPROVEMENTS.md` owns deferred reusable signals, their independent evidence
-  sources, promotion status, proposed canonical target, and next decision.
-- `.superpowers/sdd/.../progress.md` is a temporary detailed execution ledger.
+`TASK.md` is the default single record: design and acceptance criteria,
+questions and decisions, implementation plan, verification evidence,
+compounding review, and resume checkpoint. Preserve material decisions;
+explicitly supersede them when they change.
 
-Do not copy detailed scope, implementation instructions, planned checks, or
-the full step-by-step history into `TASK.md`. Keep only the current `PLAN.md`
-position and enough observed state to resume safely. `TASK.md` also does not
-store commit hashes: a commit cannot contain its own stable hash.
+Extract a large section into `DESIGN.md`, `GRILLING.md`, or `PLAN.md` only when
+that improves readability. Link the extracted section from `TASK.md` and keep
+one owner for each fact. `templates/GRILLING.md` is an optional extraction aid.
+Existing four-file tasks remain valid and need no migration.
+
+`IMPROVEMENTS.md` owns unresolved reusable signals and their disposition. A
+separate execution ledger is optional; if a tool needs one, keep it temporary
+and copy durable decisions and evidence into the task before handoff or cleanup.
+Do not duplicate step-by-step progress across the plan, checkpoint, and ledger.
 
 ## Compound engineering loop
 
@@ -177,7 +172,7 @@ aid discovery, but the rule itself has one canonical owner. Potential scripts,
 skills, CI, and executable evals remain deferred candidates until a separately
 approved task implements them.
 
-Promotion in the current task is allowed only when its approved `DESIGN.md`
+Promotion in the current task is allowed only when its approved design
 includes that change. Otherwise record a deferred follow-up; never expand scope
 silently. Register entries must not contain secrets, sensitive personal data,
 or unnecessary incident details.
@@ -191,7 +186,7 @@ or a decision that changes the next action. Also update it on an error or
 blocker, before pausing, handing off, or ending a session, before requesting a
 commit, and after a successful commit when selecting the next unit.
 
-Record the current unit, exact `PLAN.md` position, last completed result, last
+Record the current unit, exact plan position, last completed result, last
 observed verification, single next action, blocker, and relevant uncommitted
 state. Do not update the checkpoint after routine file reads, searches,
 formatting, or other actions that do not change how work should resume.
@@ -211,7 +206,7 @@ Draft -> Ready -> In Progress -> Completed -> tasks/old/
 ```
 
 - `Draft`: design, grilling, or planning is incomplete.
-- `Ready`: all four artifacts exist and implementation may start.
+- `Ready`: design is approved, questions resolved, and the plan actionable.
 - `In Progress`: implementation or verification is underway.
 - `Blocked`: progress requires permission, human input, or external change.
 - `Completed`: the final permitted commit succeeded after final review.
@@ -256,11 +251,11 @@ deployment, production changes, or another external write.
 ## Handle changes
 
 A local technical correction that preserves approved observable behavior may
-be recorded as a ledger ruling and executed without reopening the design.
+be recorded in the task's decisions and executed without reopening the design.
 
 A material scope, acceptance-criteria, API, or architecture change returns the
-task to `Draft`. Update `DESIGN.md`, repeat `$grilling`, obtain approval, and
-rebuild `PLAN.md` before resuming implementation.
+task to `Draft`. Update the design, repeat `$grilling` for the changed decisions,
+obtain approval, and revise the plan before resuming implementation.
 
 ## Complete and archive
 

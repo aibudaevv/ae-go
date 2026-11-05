@@ -5,8 +5,8 @@ it concise and update it when a change alters system boundaries, runtime
 components, data ownership, or important integrations.
 
 Do not use this document for proposed changes. Describe a proposed solution in
-the task's `DESIGN.md`; after implementation, reconcile the accepted result
-here when it changes the current architecture.
+the task's design section or linked design document; after implementation,
+reconcile the accepted result here when it changes the current architecture.
 
 ## System overview
 

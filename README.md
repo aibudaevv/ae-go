@@ -14,8 +14,8 @@ is not a runnable Go service and contains no Go module or service source code.
   signals visible until evidence promotes or rejects them.
 - [`docs/`](docs/) contains focused guidance for architecture, contracts, data,
   development, operations, security, and testing.
-- [`tasks/templates/`](tasks/templates/) provides starting points for the task
-  manifest and grilling record.
+- [`tasks/templates/`](tasks/templates/) provides a single task template and an
+  optional template for extracting a large grilling section.
 
 Detailed commands, lifecycle rules, and engineering policies remain in those
 documents rather than being repeated here.
@@ -61,7 +61,8 @@ into the target service.
 
 Choose a low-risk but non-trivial change that can exercise the complete workflow
 without production impact. Follow [`tasks/README.md`](tasks/README.md) and create
-the four task artifacts: `TASK.md`, `DESIGN.md`, `GRILLING.md`, and `PLAN.md`.
+one `TASK.md` containing the design, decisions, plan, and observed results.
+Extract sections into linked files only when they become difficult to read.
 Use the trial to confirm that approvals, checkpoints, review-unit sizing, skills,
 and verification commands work for the team before adopting the harness more
 broadly.

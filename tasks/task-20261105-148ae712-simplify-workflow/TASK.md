@@ -36,7 +36,7 @@ review, whitespace checks, and applicable routing/link checks.
 | --- | --- | --- | --- | --- |
 | 1 | Simplify learning rules and register in tasks/README.md and IMPROVEMENTS.md; include this record | 200–280 lines | One-source corrections allowed; statuses and next trigger consistent | Done |
 | 2 | Replace sequential IDs and duplicate routing in tasks/README.md, AGENTS.md, commits.md | 100–180 lines | No active task-NNN allocation rules; routing remains authoritative | Done |
-| 3 | Consolidate artifacts in workflow, templates, root README, architecture guidance | 200–290 lines | Single-file and split-file tasks both supported; local links resolve | Verified |
+| 3 | Consolidate artifacts in workflow, templates, root README, architecture guidance | 200–290 lines | Single-file and split-file tasks both supported; local links resolve | Done |
 | 4 | Decouple verification from commits in workflow and template | 120–220 lines | Task-wide permission, no-permission continuation, failure and archival cases | Verified |
 
 Units 2–4 build on the existing workflow; unit 4 uses unit 3's inline plan.
@@ -70,5 +70,5 @@ whole-change consistency review and local Markdown link validation.
 ## Resume checkpoint
 
 All four units verified; implementation and review finished. The user authorized
-the local commits. Unit 1 committed successfully; Unit 2 is prepared as Done,
-effective on commit success. Next action: commit Unit 2, then Units 3 and 4.
+the local commits. Units 1 and 2 committed successfully; Unit 3 is prepared as
+Done, effective on commit success. Next action: commit Unit 3, then Unit 4.

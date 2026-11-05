@@ -6,30 +6,32 @@
 | Status | `Draft` |
 | Created | `YYYY-MM-DD` |
 | Workspace | Worktree path or current checkout |
+| Local commit authorization | Not granted; record task-wide or per-unit permission when given |
 
-## Artifacts
+## Design
 
-- [Design](DESIGN.md)
-- [Grilling](GRILLING.md)
-- [Plan](PLAN.md)
+State the outcome, scope, approach, constraints, and acceptance criteria.
+Record design approval and its source in the session.
 
-## Units
+## Questions and decisions
 
-| Unit | Result | Status | Evidence |
-| --- | --- | --- | --- |
-| 1 | Independently reviewable outcome | `Pending` | Not run |
+Record material grilling questions, assumptions, alternatives, risks, and
+decisions. Note the disposition of relevant open improvements, or `None found`.
+Material unresolved questions block implementation.
 
-Allowed unit statuses: `Pending`, `In Progress`, `Blocked`, and `Done`. `Done`
-is effective only after the permitted unit commit succeeds. Find unit commits
-through their `Task` and `Unit` Git trailers rather than storing hashes here.
+## Plan
 
-## Acceptance results
+| Unit | Purpose, files, dependencies | Estimated changed lines | Steps and verification | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Independently reviewable outcome | At most 300 | Concrete actions, commands, expected results | Pending |
 
-Reference criteria from `DESIGN.md` without copying their requirement text.
+Use the unit statuses defined in the task workflow. Record observed evidence
+below; keep verified but uncommitted units distinct from committed units.
 
-| Criterion | Status | Evidence |
-| --- | --- | --- |
-| `AC-1` | `Pending` | Not run |
+## Verification
+
+Record observed results against acceptance criteria. Include unavailable checks,
+known gaps, and the user's acceptance of remaining risk when required.
 
 ## Compounding review
 
@@ -40,22 +42,17 @@ Complete this section before setting the task to `Completed`. Use `No action`,
 | --- | --- | --- |
 | No material signal recorded yet | `Pending` | Review before completion |
 
-## Limitations
-
-- Record unavailable checks, known gaps, and accepted constraints.
-
 ## Resume checkpoint
 
 | Field | Value |
 | --- | --- |
 | Current unit | Not selected |
-| Plan position | `DESIGN.md`, initial draft |
-| Last completed | Task manifest initialized; design not started |
+| Plan position | Design, initial draft |
+| Last completed | Task record initialized |
 | Last verification | Not run |
-| Next action | Draft `DESIGN.md` through the brainstorming workflow |
+| Next action | Draft the design through the brainstorming workflow |
 | Blocker | None |
-| Uncommitted state | Initial task artifacts |
+| Uncommitted state | Initial task record |
 
-Keep this checkpoint sufficient for another agent to resume in the same
-workspace. Detailed instructions remain in `PLAN.md`; the full step-by-step
-history remains in the temporary execution ledger.
+Extract a large section into a linked file only when useful; do not duplicate
+its contents here. Keep the checkpoint sufficient to resume in this workspace.
