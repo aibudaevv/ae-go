@@ -45,8 +45,8 @@ unit 7 reconciles planning with the completed workflow.
 | 3 | Four-field checkpoints and check scheduling: workflow, AGENTS, task template | 100–190 | Resume, unavailable checks, documentation and Go verification paths | Verified |
 | 4 | Compact Go Style while preserving local conventions | 200–290 | Compare every original rule with shortened guidance or baseline reference | Verified |
 | 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Verified |
-| 6 | Compact planning guidance | 120–220 | Cohesion, size accounting, generated output, exception and plan requirements | Pending |
-| 7 | Whole-task consistency, final evidence and closure | 40–140 | Local links/anchors, stale policy search, scenario review, diff check | Pending |
+| 6 | Compact planning guidance | 120–220 | Cohesion, size accounting, generated output, exception and plan requirements | Verified |
+| 7 | Whole-task consistency, final evidence and closure | 100–220 | Local links/anchors, stale policy search, scenario review, diff check | Pending |
 
 Run focused policy and diff review after each unit; run the complete document
 checks once at final handoff. Fixes trigger the affected checks again.
@@ -78,6 +78,12 @@ and actual unit sizes will be recorded here.
   bodies, trailers, breaking-change semantics, coherent boundaries, squash
   behavior, and explicit permission. References point to the authoritative
   authorization and unit-trailer rules. Diff and whitespace review passed.
+- Unit 6: planning retains the 300-line limit, actual size checks, cohesive
+  behavioral slices, tests with their behavior, dependency contracts, separate
+  generated/mechanical accounting, and all exception requirements. Removed
+  repeated explanations and the duplicate review checklist. Diff and whitespace
+  review passed. Unit 7 may include concise workflow reconciliation and a
+  mechanical archive move; hand-written changes stay below 300 lines.
 
 ## Compounding review
 
@@ -85,7 +91,7 @@ Pending: review observed signals before closing the task.
 
 ## Resume checkpoint
 
-- Position: Unit 5 verified; Unit 6 next.
-- Verified: Commit policy retained; whitespace passed.
-- Next action: Shorten planning guidance while preserving unit constraints.
+- Position: Unit 6 verified; Unit 7 next.
+- Verified: Planning constraints retained; whitespace passed.
+- Next action: Reconcile workflow, then run final document and scenario checks.
 - Blocker: None.
