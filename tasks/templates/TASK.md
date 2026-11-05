@@ -3,6 +3,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `<TASK-ID>` |
+| Mode | Ordinary change or full design |
 | Status | `Draft` |
 | Created | `YYYY-MM-DD` |
 | Workspace | Worktree path or current checkout |
@@ -11,11 +12,11 @@
 ## Design
 
 State the outcome, scope, approach, constraints, and acceptance criteria.
-Record design approval and its source in the session.
+For full design, record design approval and its source in the session.
 
 ## Questions and decisions
 
-Record material grilling questions, assumptions, alternatives, risks, and
+Record material questions, assumptions, alternatives, risks, and
 decisions. Note the disposition of relevant open improvements, or `None found`.
 Material unresolved questions block implementation.
 

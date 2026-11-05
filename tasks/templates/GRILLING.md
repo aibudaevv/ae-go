@@ -2,8 +2,8 @@
 
 > Optional extraction template for a large `Questions and decisions` section.
 > Keep the section in `TASK.md` by default. When extracted, link this file from
-> the task without duplicating its contents. The required grilling workflow and
-> prerequisite rules are defined in the repository's `tasks/README.md`.
+> the task without duplicating its contents. Full design requires risk review;
+> the grilling skill is optional under the repository's `tasks/README.md`.
 
 ## Requirements and ambiguities
 

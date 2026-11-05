@@ -20,19 +20,18 @@ is not a runnable Go service and contains no Go module or service source code.
 Detailed commands, lifecycle rules, and engineering policies remain in those
 documents rather than being repeated here.
 
-Each non-trivial task closes with a compounding review. Reusable evidence is
+Each recorded task closes with a compounding review. Reusable evidence is
 either promoted into its canonical repository guidance or retained in the
 improvement register for a later relevant design; a reasoned conclusion that
 no reusable learning emerged is valid.
 
-## Prerequisites
+## Choose the process
 
-Codex is the reference runtime for non-trivial work. The workflow requires the
-`superpowers:brainstorming`, `superpowers:writing-plans`, and `grilling` skills
-to be discoverable in the current session. Follow the installation and
-capability preflight in the
-[`Verify prerequisites`](tasks/README.md#verify-prerequisites) section before
-allocating a task identifier or creating task artifacts.
+The workflow distinguishes read-only work, ordinary changes, and changes that
+need full design and approval. Small standalone changes need no task record.
+Skills can help produce the required results, but no plugin or agent runtime
+is a prerequisite. See [task routing](tasks/README.md#classify-the-work) and
+[optional skills](tasks/README.md#optional-skills).
 
 ## Adopt the harness in an existing service
 
@@ -59,10 +58,9 @@ into the target service.
 
 ## Run a first trial
 
-Choose a low-risk but non-trivial change that can exercise the complete workflow
+Choose a low-risk ordinary change to exercise planning, checks, and handoff
 without production impact. Follow [`tasks/README.md`](tasks/README.md) and create
 one `TASK.md` containing the design, decisions, plan, and observed results.
 Extract sections into linked files only when they become difficult to read.
-Use the trial to confirm that approvals, checkpoints, review-unit sizing, skills,
-and verification commands work for the team before adopting the harness more
-broadly.
+Then try a change requiring full design. Confirm that risk review, approvals,
+checkpoints, review-unit sizing, and verification commands work for the team.

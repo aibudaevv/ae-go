@@ -18,14 +18,12 @@ properties.
 
 ## Task workflow
 
-Before modifying the repository, classify the requested work as small or
-non-trivial using the [Task Workflow](tasks/README.md).
-
-Small work needs no task artifacts. For non-trivial work, read and follow that
-workflow, including its prerequisite preflight, design approval, verification,
-and compounding review. Keep task mechanics and artifact rules there rather
-than duplicating them here. Respect workspace and authorization choices already
-made by the user in the current session.
+Classify work using the [Task Workflow](tasks/README.md): read-only, ordinary
+change, or full design. Read-only and small standalone work need no task
+artifacts; other changes use one task record. Full design requires risk review
+and design approval. Skills are optional tools, not prerequisites.
+Keep task mechanics there, and honor workspace choices and approvals already
+given in the current session.
 
 ## Commands
 

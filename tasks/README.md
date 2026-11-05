@@ -1,57 +1,41 @@
 # Task Workflow
 
-This directory is the durable record for non-trivial repository work. The root
+This directory is the durable record for work that needs a task artifact. The root
 [`AGENTS.md`](../AGENTS.md) is the binding entry point. Existing planning rules,
 approval boundaries, and the repository definition of done still apply.
 
 ## Classify the work
 
-A request is small only when all of the following are true:
+Choose the least involved mode that covers the actual risk:
 
-- It is local and unambiguous.
-- It does not materially affect architecture, APIs, schemas, security, or
-  operations.
-- It does not need multiple independently verifiable implementation units.
-- It has an obvious verification path.
+| Mode | Trigger | Required result |
+| --- | --- | --- |
+| Read-only | Review, investigation, or advice without repository changes | Findings and evidence in the response; no task artifacts |
+| Ordinary change | Outcome, approach, and verification are clear; no full-design trigger below | Short plan, implementation, checks, and diff review |
+| Full design | Material architecture, API/event compatibility, schema/migration, security, or operational impact; or unresolved choices affecting scope, correctness, or recovery | Design and risk review, resolved material questions, design approval, then an actionable plan |
 
-Small standalone work uses neither a task directory nor units and does not
-allocate a task identifier. Use a user-supplied identifier when present;
-otherwise its commit subject omits one. If a small change belongs to a
-non-trivial task, it is a unit of that task. Treat any uncertain classification
-as non-trivial.
+A small ordinary change is local, unambiguous, independently verifiable as one
+unit, and has an obvious verification path. It needs no task directory or
+generated ID. Use a user-supplied ID when present; otherwise omit one.
+Other ordinary changes and full-design work use one `TASK.md`. A small change
+inside an existing task remains a unit of that task.
 
-## Verify prerequisites
+Inspect the relevant context before escalating. Routine implementation choices
+do not require an interview; if a material risk remains uncertain, use full
+design. A user-approved concrete proposal already satisfies design approval.
 
-Codex is the reference runtime for this workflow. Before starting the first
-non-trivial task, install the latest available releases from their canonical
-sources:
+## Optional skills
 
-- Install Superpowers from `https://github.com/obra/superpowers`. In Codex,
-  open `/plugins`, find Superpowers, select `Install plugin`, and start a new
-  chat. It supplies the `brainstorming` and `writing-plans` workflows.
-- Use `$skill-installer` to install both `skills/productivity/grill-me` and
-  `skills/productivity/grilling` from
-  `https://github.com/mattpocock/skills`, then start a new Codex session.
-  `grill-me` is the entry wrapper; this workflow invokes `$grilling`.
+The workflow depends on results, not named tools or a particular agent runtime.
+`superpowers:brainstorming`, `superpowers:writing-plans`, and `grilling` can
+help with design, planning, and challenging assumptions. They are optional;
+missing or incompatible skills do not block work. Produce the required results
+directly and ask only for unresolved material decisions.
 
-These dependencies intentionally track their latest releases rather than a
-pinned version. Their discoverable capabilities are the compatibility gate.
-After classifying work as non-trivial and before selecting an identifier,
-confirm that the current session's skill catalog advertises all of:
-
-- `superpowers:brainstorming`;
-- `superpowers:writing-plans`;
-- `grilling`.
-
-If any capability is absent or cannot be loaded, stop and report its name with
-the applicable installation instructions. Do not select a task identifier,
-create a worktree or task artifacts, or substitute an ordinary self-review.
-Small standalone work skips this preflight. Repeat it when resuming a task in
-`Draft` or returning a task to `Draft` after a material change.
-
-Another agent runtime may be used only when it exposes equivalent workflows
-and can perform the same capability preflight; Codex is the only runtime with
-installation steps verified by this template.
+Before using a skill, check that its current instructions and helpers fit this
+repository's artifact paths, unit headings, approval boundaries, and workspace.
+Repository and user instructions take precedence. Do not install or update
+skills as a task prerequisite, or create extra artifacts just for a tool.
 
 ## Task, unit, and step
 
@@ -85,22 +69,23 @@ checkout without asking again.
 
 ## Create and design the task
 
-1. Create the task directory with a copy of `templates/TASK.md`; set `Draft`.
+1. For recorded work, create the task directory from `templates/TASK.md` and
+   record the mode. Use `Draft` until the applicable preparation is complete.
 2. Review open entries in [`IMPROVEMENTS.md`](IMPROVEMENTS.md) whose area or
-   trigger matches the scope, then draft the `Design` section through the
-   brainstorming workflow. Promoted knowledge lives in its canonical owner;
+   trigger matches the scope. State the outcome, scope, approach, acceptance
+   criteria, and applicable risks. Promoted knowledge lives in its canonical owner;
    do not scan archived tasks to recover it.
-3. Invoke `$grilling`, record material questions and decisions in the task,
-   and revise the design. Do not substitute another workflow. Record the
-   disposition of relevant improvements without repeating their evidence.
+3. For full design, challenge assumptions, alternatives, failure modes, and
+   recovery. Record material questions and decisions and the disposition of
+   relevant improvements. Skills may help; do not repeat settled questions.
 4. Stop while any material question remains unresolved.
-5. Obtain design approval. Approval of a concrete proposal already given in the
-   session counts; record it rather than asking again. Material changes require
-   renewed approval.
-6. Write the `Plan` through the writing-plans workflow, following the repository
-   planning rules. Keep commands, expected results, and dependencies actionable.
-7. Set `Ready` when the design is approved, material questions are resolved, and
-   the plan is actionable.
+5. For full design, record design approval; an approval already given in the
+   session counts. Ordinary work proceeds under the requested scope without
+   an extra design gate. Material changes require renewed approval.
+6. Write a short actionable plan following the repository planning rules:
+   unit outcomes, files, dependencies, checks, and expected results.
+7. Set `Ready` when applicable approval is recorded, material questions are
+   resolved, and the plan is actionable.
 
 The first unit commit includes the task record; no planning-only commit is
 required.
@@ -206,8 +191,8 @@ Draft -> Ready -> In Progress -> Completed -> tasks/old/
                          \-> Blocked -> In Progress
 ```
 
-- `Draft`: design, grilling, or planning is incomplete.
-- `Ready`: design is approved, questions resolved, and the plan actionable.
+- `Draft`: applicable design, risk review, or planning is incomplete.
+- `Ready`: applicable approval is recorded, questions resolved, and plan actionable.
 - `In Progress`: implementation or verification is underway.
 - `Blocked`: progress requires permission, human input, or external change.
 - `Completed`: the final permitted commit succeeded after final review.
@@ -271,8 +256,8 @@ A local technical correction that preserves approved observable behavior may
 be recorded in the task's decisions and executed without reopening the design.
 
 A material scope, acceptance-criteria, API, or architecture change returns the
-task to `Draft`. Update the design, repeat `$grilling` for the changed decisions,
-obtain approval, and revise the plan before resuming implementation.
+task to `Draft`. Reclassify its risk, review the changed decisions, obtain
+approval, and revise the plan before resuming implementation.
 
 ## Complete and archive
 
