@@ -35,7 +35,7 @@ directly and ask only for unresolved material decisions.
 Before using a skill, check that its current instructions and helpers fit this
 repository's artifact paths, unit headings, approval boundaries, and workspace.
 Repository and user instructions take precedence. Do not install or update
-skills as a task prerequisite, or create extra artifacts just for a tool.
+skills as a task prerequisite, or create extra durable artifacts just for a tool.
 
 ## Task, unit, and step
 
@@ -50,16 +50,13 @@ may remain uncommitted while later units proceed; keep their boundaries clear.
 
 ## Allocate an identifier
 
-Use the user-supplied ID, or generate `task-YYYYMMDD-<8 random hex digits>`
-using the current UTC date, for example `task-20261105-148ae712`. Check active
-and archived task directory names for the exact ID; regenerate on a generated
-collision. An existing task ID means resume that task when intended; otherwise
-ask for a distinct user-supplied ID. Never deliberately reuse an ID.
-
-Name the directory `<TASK-ID>-short-name` with a concise lowercase slug.
-No sequential counter, history scan, ref scan, or cross-clone reservation is
-required. Resolve any collision discovered during integration before merging.
-Existing identifiers, including historical `task-NNN` IDs, remain valid.
+Use the user-supplied ID or generate `task-YYYYMMDD-<8 random hex digits>` with
+the UTC date. Check active and archived directory names for an exact collision:
+regenerate a generated ID; resume an existing task only when intended, otherwise
+ask for a distinct supplied ID. Never deliberately reuse one.
+Name the directory `<TASK-ID>-short-name` with a lowercase slug. No counters,
+history/ref scans, or cross-clone reservations are needed. Resolve integration
+collisions before merging; historical IDs remain valid.
 
 ## Choose the workspace
 
@@ -71,13 +68,12 @@ checkout without asking again.
 
 1. For recorded work, create the task directory from `templates/TASK.md` and
    record the mode. Use `Draft` until the applicable preparation is complete.
-2. Review open entries in [`IMPROVEMENTS.md`](IMPROVEMENTS.md) whose area or
-   trigger matches the scope. State the outcome, scope, approach, acceptance
-   criteria, and applicable risks. Promoted knowledge lives in its canonical owner;
-   do not scan archived tasks to recover it.
+2. Review matching open entries in [`IMPROVEMENTS.md`](IMPROVEMENTS.md). State
+   outcome, scope, approach, acceptance criteria, and applicable risks. Record
+   the disposition of relevant improvements. Promoted knowledge lives in its
+   canonical owner; do not scan archived tasks to recover it.
 3. For full design, challenge assumptions, alternatives, failure modes, and
-   recovery. Record material questions and decisions and the disposition of
-   relevant improvements. Skills may help; do not repeat settled questions.
+   recovery. Record material questions and decisions; do not repeat settled ones.
 4. Stop while any material question remains unresolved.
 5. For full design, record design approval; an approval already given in the
    session counts. Ordinary work proceeds under the requested scope without
@@ -87,8 +83,8 @@ checkout without asking again.
 7. Set `Ready` when applicable approval is recorded, material questions are
    resolved, and the plan is actionable.
 
-The first unit commit includes the task record; no planning-only commit is
-required.
+If committing, include the task record with the first unit; no planning-only
+commit is required.
 
 ## Artifact authority
 
@@ -239,9 +235,9 @@ For each unit:
    ```
 
 6. Observe the commit result and report it accurately. Record a failed commit
-   separately; verification of an unchanged diff remains valid. If a hook changes files,
-   reverify the affected work. Review staged diffs and keep later units separate
-   when committing previously verified units.
+   separately; verification of an unchanged diff remains valid. If a hook changes
+   files, reverify the affected work. Review staged diffs and keep later units
+   separate when committing previously verified units.
 
 ## Handle changes
 

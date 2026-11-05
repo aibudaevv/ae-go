@@ -54,4 +54,5 @@ An ordinary internal refactor is not a breaking change.
   accurate type/scope, breaking-change marking, and a reviewed, verified diff.
 
 Commit success is a Git result, separate from work verification. Observe it
-before reporting success; see [local authorization](../../tasks/README.md#local-commit-authorization).
+before reporting success; see
+[local authorization](../../tasks/README.md#local-commit-authorization).

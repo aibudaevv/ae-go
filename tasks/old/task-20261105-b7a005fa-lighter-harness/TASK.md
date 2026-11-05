@@ -1,6 +1,7 @@
 # task-20261105-b7a005fa: Make the harness lighter
 
-Status: In Progress
+Status: Verified
+Mode: Full design; six proposals approved in the preceding review.
 Created: 2026-11-05
 Workspace: Current checkout; documentation changes only.
 Git state: Uncommitted. Local commits are not authorized.
@@ -46,7 +47,7 @@ unit 7 reconciles planning with the completed workflow.
 | 4 | Compact Go Style while preserving local conventions | 200–290 | Compare every original rule with shortened guidance or baseline reference | Verified |
 | 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Verified |
 | 6 | Compact planning guidance | 120–220 | Cohesion, size accounting, generated output, exception and plan requirements | Verified |
-| 7 | Whole-task consistency, final evidence and closure | 100–220 | Local links/anchors, stale policy search, scenario review, diff check | Pending |
+| 7 | Whole-task consistency, final evidence and closure | 180–290 including archive move | Local links/anchors, stale policy search, scenario review, diff check | Verified |
 
 Run focused policy and diff review after each unit; run the complete document
 checks once at final handoff. Fixes trigger the affected checks again.
@@ -54,8 +55,7 @@ checks once at final handoff. Fixes trigger the affected checks again.
 ## Verification
 
 Baseline: no Go module or service source; Go build/test/module/lint checks are
-not applicable. `git status --short` was empty before editing. Final results
-and actual unit sizes will be recorded here.
+not applicable. `git status --short` was empty before editing.
 
 - Unit 1: routing review covers read-only, small, ordinary, and full-design
   changes. Missing skills now allow direct preparation; material questions and
@@ -84,14 +84,56 @@ and actual unit sizes will be recorded here.
   repeated explanations and the duplicate review checklist. Diff and whitespace
   review passed. Unit 7 may include concise workflow reconciliation and a
   mechanical archive move; hand-written changes stay below 300 lines.
+- Unit 7: whole-task review and an independent read-only reviewer found no
+  actionable findings. Before closure, document validation covered 22 Markdown
+  files, 31 local links, and 7 anchors with no failures; fences were balanced.
+  Twelve protected documents and the engineering rules, definition of done,
+  and final-review requirements in AGENTS.md are unchanged. Archive-aware link,
+  unit-size, and whitespace checks are repeated at handoff.
+- Unit snapshot diffs 1–6: 233, 110, 73, 135, 179, and 179 changed lines.
+  Unit 7 includes the mechanical move of this record into `tasks/old/`,
+  checked separately from policy edits; no generated output exists.
+- Existing active guidance: 1579 -> 1284 lines (18.7% fewer), excluding this
+  task record and historical tasks. This measures document size, not runtime
+  speed or agent outcome quality; no performance benchmark was run.
+
+Scenario walkthroughs against the final policy (not executed agent evals):
+
+| Scenario | Result |
+| --- | --- |
+| Read-only review | Findings in the response, no task artifacts |
+| Small change with or without a supplied ID | No generated ID or task record; supplied ID retained |
+| Clear ordinary work across units | Compact record and plan; no extra design gate |
+| Material API, authorization, or migration change | Full design, risk review, material questions resolved, explicit design approval |
+| Missing or incompatible skill | Required results prepared directly; no installation gate |
+| Verified work without commit permission | Can close and archive; uncommitted state explicit; no commit |
+| Commit fails or hook changes files | Failure reported separately; changed tested files reverified |
+| Required check unavailable | Blocked until explicit risk acceptance; inapplicable checks explained |
+| Handoff or interruption | Four-field checkpoint; necessary intermediate state retained |
+| Go/module change or documentation-only change | Full affected-module/race checks for Go; document checks for prose; rerun after affected changes |
 
 ## Compounding review
 
-Pending: review observed signals before closing the task.
+- Promoted: the approved six simplifications are owned by the
+  [workflow](../../README.md), [agent routing](../../../AGENTS.md),
+  [development guidance](../../../docs/development/planning.md), and
+  [task template](../../templates/TASK.md). Evidence is the approved review,
+  retained-rule comparison, scenario walkthroughs, and independent review.
+- No action: no additional reusable defect emerged during implementation.
+  Existing `task-001-I1` stays open for actual external-executor use; changing
+  dependency policy does not prove that executor's compatibility.
 
 ## Resume checkpoint
 
-- Position: Unit 6 verified; Unit 7 next.
-- Verified: Planning constraints retained; whitespace passed.
-- Next action: Reconcile workflow, then run final document and scenario checks.
+- Position: All seven units verified; closed under the new workflow.
+- Verified: Policy scenarios, independent review, document and diff checks.
+- Next action: None for implementation; local commits remain unauthorized.
 - Blocker: None.
+
+## Publication authorization addendum
+
+After archival, the user explicitly instructed "нет, коммить и пушь".
+This authorizes committing the seven reviewed units and pushing the current
+`master` branch to `origin/master`. Earlier authorization statements describe
+the original uncommitted handoff. Observe and report publication results from
+Git; this authorization does not imply that either operation has succeeded.

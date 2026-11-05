@@ -17,8 +17,8 @@ For full design, record design approval and its source in the session.
 
 ## Questions and decisions
 
-Record material questions, assumptions, alternatives, risks, and
-decisions. Note the disposition of relevant open improvements, or `None found`.
+Record material questions, assumptions, alternatives, risks, and decisions.
+Note the disposition of relevant open improvements, or `None found`.
 Material unresolved questions block implementation.
 
 ## Plan
