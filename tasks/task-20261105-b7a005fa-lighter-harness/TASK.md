@@ -44,7 +44,7 @@ unit 7 reconciles planning with the completed workflow.
 | 2 | Independent work/Git states: workflow and task template | 170–260 | Uncommitted completion, authorization, commit failure, archive compatibility | Verified |
 | 3 | Four-field checkpoints and check scheduling: workflow, AGENTS, task template | 100–190 | Resume, unavailable checks, documentation and Go verification paths | Verified |
 | 4 | Compact Go Style while preserving local conventions | 200–290 | Compare every original rule with shortened guidance or baseline reference | Verified |
-| 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Pending |
+| 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Verified |
 | 6 | Compact planning guidance | 120–220 | Cohesion, size accounting, generated output, exception and plan requirements | Pending |
 | 7 | Whole-task consistency, final evidence and closure | 40–140 | Local links/anchors, stale policy search, scenario review, diff check | Pending |
 
@@ -74,6 +74,10 @@ and actual unit sizes will be recorded here.
   wrapping, and resource ownership. Removed teaching examples and the duplicate
   checklist; background stays available in the existing baseline links.
   Compared the shortened page with the original; whitespace check passed.
+- Unit 5: commit guidance retains subject grammar, ID rules, types, scopes,
+  bodies, trailers, breaking-change semantics, coherent boundaries, squash
+  behavior, and explicit permission. References point to the authoritative
+  authorization and unit-trailer rules. Diff and whitespace review passed.
 
 ## Compounding review
 
@@ -81,7 +85,7 @@ Pending: review observed signals before closing the task.
 
 ## Resume checkpoint
 
-- Position: Unit 4 verified; Unit 5 next.
-- Verified: Original Go Style rules retained; whitespace passed.
-- Next action: Shorten commit guidance while preserving its contract.
+- Position: Unit 5 verified; Unit 6 next.
+- Verified: Commit policy retained; whitespace passed.
+- Next action: Shorten planning guidance while preserving unit constraints.
 - Blocker: None.
