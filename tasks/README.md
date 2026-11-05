@@ -98,9 +98,14 @@ workspace question is needed.
 
 1. Create the task directory with copies of `templates/TASK.md` and
    `templates/GRILLING.md`; set status `Draft`.
-2. Create the first `DESIGN.md` draft through the brainstorming workflow.
+2. Review open entries in [`IMPROVEMENTS.md`](IMPROVEMENTS.md) whose area or
+   trigger matches the proposed scope, then create the first `DESIGN.md` draft
+   through the brainstorming workflow. Do not scan archived tasks for promoted
+   knowledge; its canonical owner is authoritative.
 3. Invoke `$grilling`, record its questions and decisions in `GRILLING.md`, and
    revise the design. Do not substitute ordinary self-review or another skill.
+   For every relevant improvement, record whether the design promotes, rejects,
+   or defers it and why.
 4. Stop while any material question remains unresolved.
 5. Obtain human approval of the current `DESIGN.md`. A material change after
    approval invalidates it and requires renewed approval.
@@ -121,13 +126,75 @@ the initial task artifacts.
 - `PLAN.md` owns units, files, interfaces, TDD steps, verification commands,
   and expected results.
 - `TASK.md` is a compact manifest of task status, artifact links, unit status,
-  acceptance results, observed evidence, and the resume checkpoint.
+  acceptance results, observed evidence, the compounding review, and the resume
+  checkpoint.
+- `IMPROVEMENTS.md` owns deferred reusable signals, their independent evidence
+  sources, promotion status, proposed canonical target, and next decision.
 - `.superpowers/sdd/.../progress.md` is a temporary detailed execution ledger.
 
 Do not copy detailed scope, implementation instructions, planned checks, or
 the full step-by-step history into `TASK.md`. Keep only the current `PLAN.md`
 position and enough observed state to resume safely. `TASK.md` also does not
 store commit hashes: a commit cannot contain its own stable hash.
+
+## Compound engineering loop
+
+Before a non-trivial task becomes `Completed`, review evidence produced during
+its work, including user corrections, invalidated assumptions, review findings,
+failed checks, repeated manual steps, and successful reusable patterns. Record
+each material signal in the task's `Compounding review` with one outcome:
+
+- `No action`: the evidence is task-specific or contains no reusable learning;
+  state the reason.
+- `Promoted`: the approved task updated the single canonical owner; link it.
+- `Deferred`: create or update an entry in `IMPROVEMENTS.md` and link its ID.
+
+An absent compounding review blocks completion. The review may contain a single
+reasoned `No action`; do not invent a permanent rule merely to close a task.
+Small standalone work remains exempt because it creates no task artifacts.
+
+### Register and readiness
+
+Give a new deferred signal the ID `<source-task-id>-I<N>`, using the next
+sequence number within its source task. Before adding it, look for an existing
+entry with the same underlying trigger and proposed owner. Update that entry's
+evidence sources instead of creating a duplicate, and preserve every distinct
+source task ID. Multiple observations within one task remain one independent
+source.
+
+Improvement statuses are `Candidate`, `Ready`, `Promoted`, and `Rejected`:
+
+- `Candidate`: an ordinary signal has one independent task source.
+- `Ready`: the signal is a serious risk or has at least two independent task
+  sources.
+- `Promoted`: the canonical owner was updated; link that target in the decision.
+- `Rejected`: evidence showed that the signal should not become repository
+  guidance; preserve the rationale.
+
+A serious risk is a security or privacy exposure, data loss or corruption, a
+public-contract break, an escaped defect, or inability to run a mandatory
+check. It becomes `Ready` from one source. Ordinary failure-derived signals and
+successful reusable patterns both require two independent task sources.
+
+When a design encounters a relevant `Ready` entry, it must choose promotion,
+rejection, or reasoned deferral. An out-of-scope entry does not block the task,
+but `GRILLING.md` must state why it remains out of scope and the next trigger
+that requires reconsideration. Every later relevant design makes the choice
+again; it does not rely on an earlier deferral.
+
+### Promotion ownership
+
+Promote always-loaded policy and routing into `AGENTS.md`, topic-specific
+engineering knowledge into its matching `docs/` owner, artifact shape into
+`tasks/templates/`, and lifecycle mechanics into this file. A cross-link may
+aid discovery, but the rule itself has one canonical owner. Potential scripts,
+skills, CI, and executable evals remain deferred candidates until a separately
+approved task implements them.
+
+Promotion in the current task is allowed only when its approved `DESIGN.md`
+includes that change. Otherwise record a deferred follow-up; never expand scope
+silently. Register entries must not contain secrets, sensitive personal data,
+or unnecessary incident details.
 
 ## Maintain the resume checkpoint
 
@@ -216,18 +283,20 @@ including the uncommitted final unit. Resolve all blocking findings first.
 
 While the task remains `In Progress`:
 
-1. Update acceptance results and observed evidence in `TASK.md`.
-2. Ask permission for the final unit commit.
-3. If refused or absent, mark the task and unit `Blocked`, keep the active
+1. Complete the compounding review and resolve each material signal as
+   `No action`, `Promoted`, or `Deferred`.
+2. Update acceptance results and observed evidence in `TASK.md`.
+3. Ask permission for the final unit commit.
+4. If refused or absent, mark the task and unit `Blocked`, keep the active
    directory and ledger, and stop.
-4. If granted, prepare the unit as `Done`, the task as `Completed`, and move the
+5. If granted, prepare the unit as `Done`, the task as `Completed`, and move the
    entire directory unchanged to `tasks/old/`.
-5. Create the final unit commit with the required task and unit trailers.
-6. Treat completion and archival as effective only after commit success; on
+6. Create the final unit commit with the required task and unit trailers.
+7. Treat completion and archival as effective only after commit success; on
    failure, retain or restore the active `Blocked` state.
-7. Before deleting the ledger, transfer any decision needed to understand the
+8. Before deleting the ledger, transfer any decision needed to understand the
    final implementation or its limitations to the authoritative task artifact.
-8. Delete the temporary execution ledger only after commit success.
+9. Delete the temporary execution ledger only after commit success.
 
 Closure does not require a separate unit. For a one-unit task, its only commit
 may introduce the complete record directly under `tasks/old/`.
