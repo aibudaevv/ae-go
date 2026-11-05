@@ -15,7 +15,7 @@ A request is small only when all of the following are true:
 - It has an obvious verification path.
 
 Small standalone work uses neither a task directory nor units and does not
-allocate a `task-NNN` identifier. Use a user-supplied identifier when present;
+allocate a task identifier. Use a user-supplied identifier when present;
 otherwise its commit subject omits one. If a small change belongs to a
 non-trivial task, it is a unit of that task. Treat any uncertain classification
 as non-trivial.
@@ -56,7 +56,7 @@ installation steps verified by this template.
 ## Task, unit, and step
 
 - A task is the user-visible outcome identified by the user-supplied ID or by
-  a harness-allocated `task-NNN`.
+  a harness-generated ID.
 - A unit is one independently reviewable result inside a task, limited to 300
   changed lines unless the repository planning rules document an exception.
 - A step is one concrete `PLAN.md` action inside a unit.
@@ -65,27 +65,16 @@ Each unit normally maps to one verified and permitted commit.
 
 ## Allocate an identifier
 
-Use the task identifier supplied by the user. If none was supplied, allocate a
-`task-NNN`; generated identifiers begin with `task-001`. Task identifiers are
-never reused.
+Use the user-supplied ID, or generate `task-YYYYMMDD-<8 random hex digits>`
+using the current UTC date, for example `task-20261105-148ae712`. Check active
+and archived task directory names for the exact ID; regenerate on a generated
+collision. An existing task ID means resume that task when intended; otherwise
+ask for a distinct user-supplied ID. Never deliberately reuse an ID.
 
-Harness allocation is serialized: establish one allocation owner until the
-directory is created or the attempt is abandoned.
-
-Before using a user-supplied identifier, confirm it is not already used in
-active task directories, `tasks/old/`, repository history, known refs, or
-registered worktrees. Before allocating a generated identifier, inspect the
-same sources, choose one greater than the highest `task-NNN`, then repeat the
-check immediately before the first unit commit.
-
-This lightweight harness cannot reserve an ID atomically across disconnected
-clones. If later integration reveals an external collision, renumber the
-unmerged task to the next free ID before integration. If known state is
-ambiguous, stop for human confirmation rather than guessing.
-
-Name the directory `<TASK-ID>-short-name` using the selected identifier and a
-concise lowercase slug.
-Cancelled, deleted, missing, active, and archived identifiers remain spent.
+Name the directory `<TASK-ID>-short-name` with a concise lowercase slug.
+No sequential counter, history scan, ref scan, or cross-clone reservation is
+required. Resolve any collision discovered during integration before merging.
+Existing identifiers, including historical `task-NNN` IDs, remain valid.
 
 ## Choose the workspace
 

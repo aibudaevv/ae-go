@@ -21,31 +21,11 @@ properties.
 Before modifying the repository, classify the requested work as small or
 non-trivial using the [Task Workflow](tasks/README.md).
 
-Small work does not require task artifacts. For every non-trivial task:
-
-1. Read `tasks/README.md` completely before implementation.
-2. Run its prerequisite preflight against the current session's skill catalog.
-   If it fails, stop before allocating an ID, creating a worktree, or creating
-   task artifacts.
-3. Use the task identifier supplied by the user. If none was supplied,
-   allocate the next repository-wide, non-reusable `task-NNN` identifier from
-   active tasks, `tasks/old/`, repository history, known refs, and worktrees.
-4. Ask permission to create a worktree. If refused, continue in the current
-   checkout. Then create `TASK.md` from `tasks/templates/TASK.md` and
-   `GRILLING.md` from `tasks/templates/GRILLING.md`.
-5. Review relevant open entries in `tasks/IMPROVEMENTS.md`, create `DESIGN.md`,
-   invoke `$grilling` after its first draft, resolve every material question,
-   and obtain design approval. Then create `PLAN.md`.
-6. Set `Ready` only when all four task artifacts exist and the plan is
-   actionable. Keep `TASK.md` as a compact status and evidence manifest; do not
-   duplicate design, plan, or step-level progress in it.
-7. Execute independently reviewable units of at most 300 changed lines. After
-   verifying each unit, request permission for its single commit; do not start
-   the next unit without a successful permitted commit.
-8. Before completion, record the required compounding review in `TASK.md` using
-   the outcomes and promotion rules in `tasks/README.md`.
-9. Run final verification and review before the final unit commit. That commit
-   may also set `Completed` and move the task intact to `tasks/old/`.
+Small work needs no task artifacts. For non-trivial work, read and follow that
+workflow, including its prerequisite preflight, design approval, verification,
+and compounding review. Keep task mechanics and artifact rules there rather
+than duplicating them here. Respect workspace and authorization choices already
+made by the user in the current session.
 
 ## Commands
 
