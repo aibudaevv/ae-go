@@ -176,6 +176,11 @@ public-contract break, an escaped defect, or inability to run a mandatory
 check. It becomes `Ready` from one source. Ordinary failure-derived signals and
 successful reusable patterns both require two independent task sources.
 
+The readiness threshold applies to every promotion, including a direct
+task-local promotion that has no existing register entry. A first ordinary
+signal remains `Candidate`; approved scope is necessary for promotion but does
+not replace the evidence threshold.
+
 When a design encounters a relevant `Ready` entry, it must choose promotion,
 rejection, or reasoned deferral. An out-of-scope entry does not block the task,
 but `GRILLING.md` must state why it remains out of scope and the next trigger

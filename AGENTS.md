@@ -33,15 +33,18 @@ Small work does not require task artifacts. For every non-trivial task:
 4. Ask permission to create a worktree. If refused, continue in the current
    checkout. Then create `TASK.md` from `tasks/templates/TASK.md` and
    `GRILLING.md` from `tasks/templates/GRILLING.md`.
-5. Create `DESIGN.md`, invoke `$grilling` after its first draft, resolve every
-   material question, and obtain design approval. Then create `PLAN.md`.
+5. Review relevant open entries in `tasks/IMPROVEMENTS.md`, create `DESIGN.md`,
+   invoke `$grilling` after its first draft, resolve every material question,
+   and obtain design approval. Then create `PLAN.md`.
 6. Set `Ready` only when all four task artifacts exist and the plan is
    actionable. Keep `TASK.md` as a compact status and evidence manifest; do not
    duplicate design, plan, or step-level progress in it.
 7. Execute independently reviewable units of at most 300 changed lines. After
    verifying each unit, request permission for its single commit; do not start
    the next unit without a successful permitted commit.
-8. Run final verification and review before the final unit commit. That commit
+8. Before completion, record the required compounding review in `TASK.md` using
+   the outcomes and promotion rules in `tasks/README.md`.
+9. Run final verification and review before the final unit commit. That commit
    may also set `Completed` and move the task intact to `tasks/old/`.
 
 ## Commands

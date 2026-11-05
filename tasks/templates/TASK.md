@@ -31,6 +31,15 @@ Reference criteria from `DESIGN.md` without copying their requirement text.
 | --- | --- | --- |
 | `AC-1` | `Pending` | Not run |
 
+## Compounding review
+
+Complete this section before setting the task to `Completed`. Use `No action`,
+`Promoted`, or `Deferred` according to the lifecycle in `tasks/README.md`.
+
+| Signal reviewed | Outcome | Evidence, canonical target, or improvement ID |
+| --- | --- | --- |
+| No material signal recorded yet | `Pending` | Review before completion |
+
 ## Limitations
 
 - Record unavailable checks, known gaps, and accepted constraints.

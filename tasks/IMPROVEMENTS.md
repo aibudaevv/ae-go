@@ -23,3 +23,4 @@ defined in the [task workflow](README.md#compound-engineering-loop).
 
 | ID | Status | Area or trigger | Evidence sources | Proposed canonical target | Decision or next trigger |
 | --- | --- | --- | --- | --- | --- |
+| `task-001-I1` | `Candidate` | Superpowers inline execution helper paths and `Task N` versus `Unit N` plan headings | `task-001` | `tasks/README.md` execution guidance | Reconsider if a second task reproduces either compatibility failure; keep external plugin details out of always-loaded guidance until then. |

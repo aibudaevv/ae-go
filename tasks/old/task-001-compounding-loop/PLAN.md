@@ -170,12 +170,13 @@ no Go module or source.
 
 Record acceptance evidence and a compounding review for this task. If no new
 signal emerged beyond the implemented design, record reasoned `No action`.
-Prepare Unit 2 as `Done`, set the task to `Completed`, and move the complete
-directory to `tasks/old/`, with those states effective only after commit.
+Keep Unit 2 and the task `In Progress` until commit permission is granted.
 
 - [ ] **Step 6: Request permission and commit Unit 2**
 
 After showing the complete final-unit diff, request explicit permission. If
-granted, commit with subject `docs: task-001 route tasks through compounding
-review` and trailers `Task: task-001` and `Unit: 2`. On refusal or failure,
-retain or restore a resumable `Blocked` state and do not archive as completed.
+granted, prepare Unit 2 as `Done`, set the task to `Completed`, move the complete
+directory to `tasks/old/`, and commit with subject `docs: task-001 route tasks
+through compounding review` and trailers `Task: task-001` and `Unit: 2`. On
+refusal or failure, retain or restore a resumable `Blocked` state and do not
+archive as completed.

@@ -13,6 +13,16 @@
 | --- | --- | --- |
 | What remains unclear? | Unresolved | Blocks `Ready` when material |
 
+## Relevant accumulated knowledge
+
+Review matching open entries in the repository's `tasks/IMPROVEMENTS.md` while
+drafting the design. Record every relevant entry's effect during grilling; use
+`None found` when no area or trigger matches.
+
+| Improvement ID | Relevance | Disposition and design effect | Next trigger when deferred |
+| --- | --- | --- | --- |
+| None reviewed yet | Pending | Review before design approval | Not set |
+
 ## Assumptions
 
 | Assumption | Evidence | Risk if wrong |

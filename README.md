@@ -10,6 +10,8 @@ is not a runnable Go service and contains no Go module or service source code.
   approval boundaries, engineering constraints, and contextual documentation.
 - [`tasks/README.md`](tasks/README.md) defines the task workflow, artifact
   lifecycle, checkpoints, review units, and completion rules.
+- [`tasks/IMPROVEMENTS.md`](tasks/IMPROVEMENTS.md) keeps reusable learning
+  signals visible until evidence promotes or rejects them.
 - [`docs/`](docs/) contains focused guidance for architecture, contracts, data,
   development, operations, security, and testing.
 - [`tasks/templates/`](tasks/templates/) provides starting points for the task
@@ -17,6 +19,11 @@ is not a runnable Go service and contains no Go module or service source code.
 
 Detailed commands, lifecycle rules, and engineering policies remain in those
 documents rather than being repeated here.
+
+Each non-trivial task closes with a compounding review. Reusable evidence is
+either promoted into its canonical repository guidance or retained in the
+improvement register for a later relevant design; a reasoned conclusion that
+no reusable learning emerged is valid.
 
 ## Prerequisites
 
