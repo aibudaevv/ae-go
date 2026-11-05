@@ -61,7 +61,8 @@ installation steps verified by this template.
   changed lines unless the repository planning rules document an exception.
 - A step is one concrete plan action inside a unit.
 
-Each unit normally maps to one verified and permitted commit.
+Each unit normally maps to one verified and permitted commit. Verified units
+may remain uncommitted while later units proceed; keep their boundaries clear.
 
 ## Allocate an identifier
 
@@ -213,40 +214,56 @@ Draft -> Ready -> In Progress -> Completed -> tasks/old/
 - `Cancelled`: work stopped permanently; preserve its ID and rationale under
   `tasks/` because `tasks/old/` is reserved for completed work.
 
-Unit statuses are `Pending`, `In Progress`, `Blocked`, and `Done`. A status of
+Unit statuses are `Pending`, `In Progress`, `Blocked`, `Verified`, and `Done`.
+`Verified` means checks passed and the diff was reviewed; later units may start.
 `Done` becomes effective only after the unit's permitted commit succeeds.
+
+## Local commit authorization
+
+The user may authorize all local unit commits within an approved task scope
+once, or authorize commits individually. Record the permission and its scope
+in the task; honor permission already given in the session without asking again.
+Design approval alone is not commit authorization. A material change beyond
+the authorized scope requires renewed permission.
+Individual permission covers the reviewed unit diff; a material change to that
+diff requires renewed permission. Task-wide permission covers units within the
+approved task scope.
+
+Without commit permission, keep verified work uncommitted and continue other
+planned units. At handoff, show the reviewable result and request permission
+only if committing is the remaining required action. An explicit instruction
+to stop or refusal of further work must be honored.
+
+Local commit permission does not authorize push, merge, PR creation, deployment,
+production changes, or another external write.
 
 ## Execute a unit
 
 For each unit:
 
-1. Set the task and unit to `In Progress` and point the resume checkpoint to
-   the unit's first `PLAN.md` step.
-2. Follow the unit's `PLAN.md` steps and applicable engineering rules.
+1. Set the task and unit to `In Progress`; update the checkpoint to the unit.
+2. Follow its plan and applicable engineering rules.
 3. Run every required verification and observe its result.
    If a required verification is unavailable, keep the task and unit `Blocked`
    until the user explicitly accepts the remaining risk. Record the check,
    reason, and acceptance in `TASK.md`.
-4. Update `TASK.md` with unit-level evidence and a current resume checkpoint,
-   leaving the unit `In Progress`.
-5. Show the current unit diff and ask for explicit permission to commit it.
-   A material change to that diff invalidates the permission and requires
-   renewed permission.
-6. If permission is refused or absent, mark the task and unit `Blocked` and do
-   not begin another unit.
-7. If granted, prepare `Done` and create one commit with trailers:
+4. Review the unit diff, record evidence, and set `Verified`.
+5. If local commit permission covers the unit, prepare `Done` and create one
+   commit with trailers; otherwise retain `Verified` and continue:
 
    ```text
    Task: <TASK-ID>
    Unit: N
    ```
 
-8. Treat `Done` as effective only after commit success. Then point the
-   checkpoint to the next unit. On failure, retain or restore a resumable
-   `Blocked` state and keep the ledger.
+6. After commit success, `Done` is effective. On failure, restore `Verified`,
+   record the error and next action, and never report a successful commit.
+   Keep the task `Blocked` if that failure prevents further work.
+7. Update the checkpoint before continuing to the next unit.
 
-Permission for a unit commit does not authorize push, merge, PR creation,
-deployment, production changes, or another external write.
+When committing several previously verified units, preserve their planned
+boundaries, include each unit's required documentation and tests, and review
+the staged diff. Do not sweep later units into an earlier commit.
 
 ## Handle changes
 
@@ -267,17 +284,19 @@ While the task remains `In Progress`:
 1. Complete the compounding review and resolve each material signal as
    `No action`, `Promoted`, or `Deferred`.
 2. Update acceptance results and observed evidence in `TASK.md`.
-3. Ask permission for the final unit commit.
-4. If refused or absent, mark the task and unit `Blocked`, keep the active
-   directory and ledger, and stop.
-5. If granted, prepare the unit as `Done`, the task as `Completed`, and move the
-   entire directory unchanged to `tasks/old/`.
-6. Create the final unit commit with the required task and unit trailers.
-7. Treat completion and archival as effective only after commit success; on
-   failure, retain or restore the active `Blocked` state.
-8. Before deleting the ledger, transfer any decision needed to understand the
-   final implementation or its limitations to the authoritative task artifact.
-9. Delete the temporary execution ledger only after commit success.
+3. Transfer durable decisions and evidence from any temporary tool ledger.
+4. Commit remaining verified units only when authorized. Task-wide permission
+   needs no repeated confirmation; otherwise request the missing permission
+   after the complete result is ready for review.
+5. While permission is absent, keep the task active with verified units and a
+   checkpoint stating that commits remain. Do not claim completion or archive.
+6. For the final authorized commit, prepare the final unit as `Done`, the task
+   as `Completed`, and move the whole directory to `tasks/old/`.
+7. Create that commit with the required trailers. Completion and archival take
+   effect only on success; on failure restore the active directory and actual
+   unit states, and record the blocker.
+8. Delete any temporary tool ledger only after commit success and evidence
+   transfer. The durable task record is sufficient without a separate ledger.
 
 Closure does not require a separate unit. For a one-unit task, its only commit
 may introduce the complete record directly under `tasks/old/`.

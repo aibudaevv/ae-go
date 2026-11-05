@@ -1,6 +1,6 @@
 # task-20261105-148ae712: Simplify the engineering workflow
 
-Status: In Progress
+Status: Completed
 Created: 2026-11-05
 Workspace: Current checkout, as requested by the user.
 
@@ -37,7 +37,7 @@ review, whitespace checks, and applicable routing/link checks.
 | 1 | Simplify learning rules and register in tasks/README.md and IMPROVEMENTS.md; include this record | 200–280 lines | One-source corrections allowed; statuses and next trigger consistent | Done |
 | 2 | Replace sequential IDs and duplicate routing in tasks/README.md, AGENTS.md, commits.md | 100–180 lines | No active task-NNN allocation rules; routing remains authoritative | Done |
 | 3 | Consolidate artifacts in workflow, templates, root README, architecture guidance | 200–290 lines | Single-file and split-file tasks both supported; local links resolve | Done |
-| 4 | Decouple verification from commits in workflow and template | 120–220 lines | Task-wide permission, no-permission continuation, failure and archival cases | Verified |
+| 4 | Decouple verification from commits in workflow and template | 120–220 lines | Task-wide permission, no-permission continuation, failure and archival cases | Done |
 
 Units 2–4 build on the existing workflow; unit 4 uses unit 3's inline plan.
 Inspect each unit's diff independently before continuing. Finish with a
@@ -69,6 +69,8 @@ whole-change consistency review and local Markdown link validation.
 
 ## Resume checkpoint
 
-All four units verified; implementation and review finished. The user authorized
-the local commits. Units 1 and 2 committed successfully; Unit 3 is prepared as
-Done, effective on commit success. Next action: commit Unit 3, then Unit 4.
+All four units verified; implementation and independent review finished. The
+user authorized the local commits. Units 1–3 committed successfully; Unit 4,
+completion, and archival take effect on final commit success. No further
+implementation remains. If that commit fails, restore the active task and
+Verified status for Unit 4; otherwise no next action is required.
