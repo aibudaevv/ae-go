@@ -153,7 +153,7 @@ An absent compounding review blocks completion. The review may contain a single
 reasoned `No action`; do not invent a permanent rule merely to close a task.
 Small standalone work remains exempt because it creates no task artifacts.
 
-### Register and readiness
+### Improvement register
 
 Give a new deferred signal the ID `<source-task-id>-I<N>`, using the next
 sequence number within its source task. Before adding it, look for an existing
@@ -162,30 +162,22 @@ evidence sources instead of creating a duplicate, and preserve every distinct
 source task ID. Multiple observations within one task remain one independent
 source.
 
-Improvement statuses are `Candidate`, `Ready`, `Promoted`, and `Rejected`:
+Each entry records its ID, status, area or trigger, evidence links, proposed
+canonical target, and decision or next action. Status is `Open`, `Applied`, or
+`Rejected`: unresolved signals stay open; applied entries link the updated
+owner; rejected entries retain the rationale. Preserve IDs and evidence when
+updating an entry. Do not rewrite archived task records to migrate old statuses.
 
-- `Candidate`: an ordinary signal has one independent task source.
-- `Ready`: the signal is a serious risk or has at least two independent task
-  sources.
-- `Promoted`: the canonical owner was updated; link that target in the decision.
-- `Rejected`: evidence showed that the signal should not become repository
-  guidance; preserve the rationale.
+Two independent task sources are useful evidence for a general rule, not a
+promotion prerequisite. A verified correction or well-supported improvement
+may be applied from one source within approved scope. Prioritize security,
+privacy, data integrity, public-contract failures, escaped defects, and blocked
+mandatory checks without waiting for repetition. Do not generalize a local
+workaround into permanent policy without a rationale.
 
-A serious risk is a security or privacy exposure, data loss or corruption, a
-public-contract break, an escaped defect, or inability to run a mandatory
-check. It becomes `Ready` from one source. Ordinary failure-derived signals and
-successful reusable patterns both require two independent task sources.
-
-The readiness threshold applies to every promotion, including a direct
-task-local promotion that has no existing register entry. A first ordinary
-signal remains `Candidate`; approved scope is necessary for promotion but does
-not replace the evidence threshold.
-
-When a design encounters a relevant `Ready` entry, it must choose promotion,
-rejection, or reasoned deferral. An out-of-scope entry does not block the task,
-but `GRILLING.md` must state why it remains out of scope and the next trigger
-that requires reconsideration. Every later relevant design makes the choice
-again; it does not rely on an earlier deferral.
+During design, record the disposition of relevant open entries: apply, reject,
+or defer with a reason and a concrete next trigger. Out-of-scope entries do not
+block the task. Reconsider them when that trigger or a relevant design occurs.
 
 ### Promotion ownership
 
