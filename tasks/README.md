@@ -109,7 +109,7 @@ Do not duplicate step-by-step progress across the plan, checkpoint, and ledger.
 
 ## Compound engineering loop
 
-Before a non-trivial task becomes `Completed`, review evidence produced during
+Before a recorded task becomes `Verified`, review evidence produced during
 its work, including user corrections, invalidated assumptions, review findings,
 failed checks, repeated manual steps, and successful reusable patterns. Record
 each material signal in the task's `Compounding review` with one outcome:
@@ -184,24 +184,26 @@ workspace.
 
 ## Lifecycle
 
-The task lifecycle is:
-
 ```text
-Draft -> Ready -> In Progress -> Completed -> tasks/old/
+Draft -> Ready -> In Progress -> Verified -> tasks/old/
                          \-> Blocked -> In Progress
 ```
 
-- `Draft`: applicable design, risk review, or planning is incomplete.
-- `Ready`: applicable approval is recorded, questions resolved, and plan actionable.
-- `In Progress`: implementation or verification is underway.
-- `Blocked`: progress requires permission, human input, or external change.
-- `Completed`: the final permitted commit succeeded after final review.
-- `Cancelled`: work stopped permanently; preserve its ID and rationale under
-  `tasks/` because `tasks/old/` is reserved for completed work.
+`Draft` means applicable preparation is incomplete; `Ready` means the plan is
+actionable, material questions are resolved, and applicable approval is recorded.
+`In Progress` covers implementation and verification. `Blocked` means required
+input, permission, or infrastructure is missing. `Verified` means acceptance
+criteria, applicable checks, diff review, and the compounding review are complete.
+It is the terminal success state whether or not a commit was requested.
+`Cancelled` work retains its ID and rationale under `tasks/`.
 
-Unit statuses are `Pending`, `In Progress`, `Blocked`, `Verified`, and `Done`.
-`Verified` means checks passed and the diff was reviewed; later units may start.
-`Done` becomes effective only after the unit's permitted commit succeeds.
+Units use `Pending`, `In Progress`, `Blocked`, and `Verified`; verification and
+diff review make a unit `Verified` and allow later units to start.
+Historical `Completed` tasks and `Done` units remain valid; do not migrate them.
+
+Git state is independent: uncommitted, partially committed, or committed.
+Report the observed state at handoff; use Git to inspect the current state on
+resume. A recorded snapshot may become outdated after a later commit.
 
 ## Local commit authorization
 
@@ -215,9 +217,9 @@ diff requires renewed permission. Task-wide permission covers units within the
 approved task scope.
 
 Without commit permission, keep verified work uncommitted and continue other
-planned units. At handoff, show the reviewable result and request permission
-only if committing is the remaining required action. An explicit instruction
-to stop or refusal of further work must be honored.
+planned units. A request to implement a change does not require a commit.
+Ask for missing permission only when committing is a requested remaining action,
+after the concrete result is ready for review. Honor a stop or refusal.
 
 Local commit permission does not authorize push, merge, PR creation, deployment,
 production changes, or another external write.
@@ -226,29 +228,25 @@ production changes, or another external write.
 
 For each unit:
 
-1. Set the task and unit to `In Progress`; update the checkpoint to the unit.
+1. Set the task and unit to `In Progress`; update the checkpoint at the boundary.
 2. Follow its plan and applicable engineering rules.
 3. Run every required verification and observe its result.
    If a required verification is unavailable, keep the task and unit `Blocked`
    until the user explicitly accepts the remaining risk. Record the check,
    reason, and acceptance in `TASK.md`.
 4. Review the unit diff, record evidence, and set `Verified`.
-5. If local commit permission covers the unit, prepare `Done` and create one
-   commit with trailers; otherwise retain `Verified` and continue:
+5. Commit only if requested and authorized, preserving the reviewed unit boundary
+   and including its documentation and tests. Use trailers:
 
    ```text
    Task: <TASK-ID>
    Unit: N
    ```
 
-6. After commit success, `Done` is effective. On failure, restore `Verified`,
-   record the error and next action, and never report a successful commit.
-   Keep the task `Blocked` if that failure prevents further work.
-7. Update the checkpoint before continuing to the next unit.
-
-When committing several previously verified units, preserve their planned
-boundaries, include each unit's required documentation and tests, and review
-the staged diff. Do not sweep later units into an earlier commit.
+6. Observe the commit result and report it accurately. Record a failed commit
+   separately; verification of an unchanged diff remains valid. If a hook changes files,
+   reverify the affected work. Review staged diffs and keep later units separate
+   when committing previously verified units.
 
 ## Handle changes
 
@@ -261,30 +259,19 @@ approval, and revise the plan before resuming implementation.
 
 ## Complete and archive
 
-Run final verification and whole-task review before the final unit commit,
-including the uncommitted final unit. Resolve all blocking findings first.
+Run final applicable verification and whole-task diff review, including
+uncommitted work. Resolve blocking findings, record acceptance evidence and
+the compounding review, and transfer durable decisions from temporary ledgers.
 
-While the task remains `In Progress`:
+Set the task to `Verified`, record the observed Git state and a handoff
+checkpoint, and move its directory to `tasks/old/`. This is allowed without a
+commit or commit permission. State clearly when verified work is uncommitted.
+If any requested commit remains blocked, report that separately; do not imply
+it succeeded. Once evidence is transferred, temporary ledgers may be removed.
 
-1. Complete the compounding review and resolve each material signal as
-   `No action`, `Promoted`, or `Deferred`.
-2. Update acceptance results and observed evidence in `TASK.md`.
-3. Transfer durable decisions and evidence from any temporary tool ledger.
-4. Commit remaining verified units only when authorized. Task-wide permission
-   needs no repeated confirmation; otherwise request the missing permission
-   after the complete result is ready for review.
-5. While permission is absent, keep the task active with verified units and a
-   checkpoint stating that commits remain. Do not claim completion or archive.
-6. For the final authorized commit, prepare the final unit as `Done`, the task
-   as `Completed`, and move the whole directory to `tasks/old/`.
-7. Create that commit with the required trailers. Completion and archival take
-   effect only on success; on failure restore the active directory and actual
-   unit states, and record the blocker.
-8. Delete any temporary tool ledger only after commit success and evidence
-   transfer. The durable task record is sufficient without a separate ledger.
-
-Closure does not require a separate unit. For a one-unit task, its only commit
-may introduce the complete record directly under `tasks/old/`.
+Closure needs no separate unit or commit. Keep relative links valid after
+archival. Uncommitted records support restart only in the surviving workspace;
+archival alone does not make them durable in Git.
 
 ## Artifact ownership after archival
 

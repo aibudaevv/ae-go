@@ -41,7 +41,7 @@ unit 7 reconciles planning with the completed workflow.
 | Unit | Purpose and files | Estimated changed lines | Verification | Status |
 | --- | --- | --- | --- | --- |
 | 1 | Adaptive process and optional skills: workflow, AGENTS, README, templates, this record | 240–300 | Routing and missing-skill scenarios; links; diff | Verified |
-| 2 | Independent work/Git states: workflow and task template | 170–260 | Uncommitted completion, authorization, commit failure, archive compatibility | Pending |
+| 2 | Independent work/Git states: workflow and task template | 170–260 | Uncommitted completion, authorization, commit failure, archive compatibility | Verified |
 | 3 | Four-field checkpoints and check scheduling: workflow, AGENTS, task template | 100–190 | Resume, unavailable checks, documentation and Go verification paths | Pending |
 | 4 | Compact Go Style while preserving local conventions | 200–290 | Compare every original rule with shortened guidance or baseline reference | Pending |
 | 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Pending |
@@ -60,6 +60,10 @@ and actual unit sizes will be recorded here.
 - Unit 1: routing review covers read-only, small, ordinary, and full-design
   changes. Missing skills now allow direct preparation; material questions and
   approval still gate full design. `git diff --check` passed.
+- Unit 2: an unchanged verified diff remains verified without a commit or after
+  commit failure; hooks changing files require reverification. Commit approval
+  remains explicit, Git state is reported separately, and historical statuses
+  remain valid. Whitespace and lifecycle-reference review passed.
 
 ## Compounding review
 
@@ -67,7 +71,7 @@ Pending: review observed signals before closing the task.
 
 ## Resume checkpoint
 
-- Position: Unit 1 verified; Unit 2 next.
-- Verified: Routing and optional skill policy reviewed; whitespace check passed.
-- Next action: Separate work completion from Git state.
+- Position: Unit 2 verified; Unit 3 next.
+- Verified: Work/Git state and archival scenarios; whitespace check passed.
+- Next action: Reduce checkpoints and define verification scheduling.
 - Blocker: None.

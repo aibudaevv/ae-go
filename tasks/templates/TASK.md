@@ -7,6 +7,7 @@
 | Status | `Draft` |
 | Created | `YYYY-MM-DD` |
 | Workspace | Worktree path or current checkout |
+| Git state at handoff | Not inspected; report separately from work status |
 | Local commit authorization | Not granted; record task-wide or per-unit permission when given |
 
 ## Design
@@ -27,7 +28,7 @@ Material unresolved questions block implementation.
 | 1 | Independently reviewable outcome | At most 300 | Concrete actions, commands, expected results | Pending |
 
 Use the unit statuses defined in the task workflow. Record observed evidence
-below; keep verified but uncommitted units distinct from committed units.
+below; `Verified` describes work quality independently of Git state.
 
 ## Verification
 
@@ -36,7 +37,7 @@ known gaps, and the user's acceptance of remaining risk when required.
 
 ## Compounding review
 
-Complete this section before setting the task to `Completed`. Use `No action`,
+Complete this section before setting the task to `Verified`. Use `No action`,
 `Promoted`, or `Deferred` according to the lifecycle in `tasks/README.md`.
 
 | Signal reviewed | Outcome | Evidence, canonical target, or improvement ID |
