@@ -25,10 +25,15 @@ and design approval. Skills are optional tools, not prerequisites.
 Keep task mechanics there, and honor workspace choices and approvals already
 given in the current session.
 
-## Commands
+## Verification
 
-Run commands from the module root unless repository-specific instructions say
-otherwise.
+Select checks by changed behavior and run them from the relevant module root.
+
+| When | Checks |
+| --- | --- |
+| During a unit | Format changed Go files; run focused package, regression, and applicable contract/integration checks |
+| Final handoff after Go or module changes | Full command set below in every affected module; relevant migration and integration checks |
+| Final handoff after documentation-only changes | Local Markdown links/anchors, affected examples and policy scenarios, and `git diff --check`; Go checks are inapplicable |
 
 ```sh
 gofmt -w <changed-go-files>
@@ -38,10 +43,13 @@ go mod tidy -diff
 golangci-lint run ./... # when .golangci.yml/.golangci.yaml exists
 ```
 
-Use focused package tests while iterating, then run the broadest relevant checks
-before handoff. If several `go.mod` files exist, verify every affected module;
-root `./...` does not cover submodules. Report unavailable commands or required
-external infrastructure instead of silently skipping a check.
+Always review the final diff and run `git diff --check`. Root `./...` does not
+cover submodules. Run the final applicable set once after implementation;
+repeat affected checks after changes, failures, or new concerns. A commit or
+bookkeeping alone does not require a rerun; hooks or generation changing tested
+files do. Record commands, observed results, and the scope they verified.
+Explain inapplicable checks. Report unavailable required checks or infrastructure;
+they require explicit acceptance of remaining risk under the definition of done.
 
 ## Required context by task
 

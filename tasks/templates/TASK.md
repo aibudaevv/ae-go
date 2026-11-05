@@ -48,13 +48,10 @@ Complete this section before setting the task to `Verified`. Use `No action`,
 
 | Field | Value |
 | --- | --- |
-| Current unit | Not selected |
-| Plan position | Design, initial draft |
-| Last completed | Task record initialized |
-| Last verification | Not run |
-| Next action | Draft the design through the brainstorming workflow |
+| Position | Initial preparation; current unit and step when selected |
+| Verified | Not run; summarize or link observed evidence |
+| Next action | State the next concrete action for the chosen mode |
 | Blocker | None |
-| Uncommitted state | Initial task record |
 
 Extract a large section into a linked file only when useful; do not duplicate
 its contents here. Keep the checkpoint sufficient to resume in this workspace.

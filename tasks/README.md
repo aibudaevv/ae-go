@@ -165,22 +165,15 @@ or unnecessary incident details.
 
 ## Maintain the resume checkpoint
 
-Initialize the checkpoint when creating the task. Update it when starting a
-unit and after a meaningful transition such as an expected failing test, a
-completed implementation, a passing verification, a migration or generation,
-or a decision that changes the next action. Also update it on an error or
-blocker, before pausing, handing off, or ending a session, before requesting a
-commit, and after a successful commit when selecting the next unit.
+Use four fields: position, verified result, next action, and blocker. Initialize
+them with the task, then update at unit boundaries, on a blocker, and before
+pausing, handing off, or ending a session. Include any intermediate state or
+changed decision needed for safe resumption before interruption.
 
-Record the current unit, exact plan position, last completed result, last
-observed verification, single next action, blocker, and relevant uncommitted
-state. Do not update the checkpoint after routine file reads, searches,
-formatting, or other actions that do not change how work should resume.
-
-Before a unit commit the checkpoint is local working-tree state and supports a
-restart in the same workspace. The unit commit makes the checkpoint durable in
-Git. Do not claim that an uncommitted checkpoint survives loss of the
-workspace.
+Keep detailed check results in `Verification` and link or summarize them here.
+Do not rewrite the checkpoint after each RED/GREEN step or routine command.
+Git state is reported separately. An uncommitted checkpoint supports restart
+only while the workspace survives; a successful commit makes it durable in Git.
 
 ## Lifecycle
 
@@ -230,10 +223,12 @@ For each unit:
 
 1. Set the task and unit to `In Progress`; update the checkpoint at the boundary.
 2. Follow its plan and applicable engineering rules.
-3. Run every required verification and observe its result.
+3. Run the unit's applicable checks under the schedule in `AGENTS.md` and
+   observe the results. Final broad checks run once before whole-task handoff.
    If a required verification is unavailable, keep the task and unit `Blocked`
    until the user explicitly accepts the remaining risk. Record the check,
    reason, and acceptance in `TASK.md`.
+   Inapplicable checks need an explanation, not risk acceptance.
 4. Review the unit diff, record evidence, and set `Verified`.
 5. Commit only if requested and authorized, preserving the reviewed unit boundary
    and including its documentation and tests. Use trailers:

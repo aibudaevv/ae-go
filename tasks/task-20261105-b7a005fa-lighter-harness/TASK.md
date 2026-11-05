@@ -42,7 +42,7 @@ unit 7 reconciles planning with the completed workflow.
 | --- | --- | --- | --- | --- |
 | 1 | Adaptive process and optional skills: workflow, AGENTS, README, templates, this record | 240–300 | Routing and missing-skill scenarios; links; diff | Verified |
 | 2 | Independent work/Git states: workflow and task template | 170–260 | Uncommitted completion, authorization, commit failure, archive compatibility | Verified |
-| 3 | Four-field checkpoints and check scheduling: workflow, AGENTS, task template | 100–190 | Resume, unavailable checks, documentation and Go verification paths | Pending |
+| 3 | Four-field checkpoints and check scheduling: workflow, AGENTS, task template | 100–190 | Resume, unavailable checks, documentation and Go verification paths | Verified |
 | 4 | Compact Go Style while preserving local conventions | 200–290 | Compare every original rule with shortened guidance or baseline reference | Pending |
 | 5 | Compact commit guidance | 150–240 | Subject, ID, breaking change, permission, trailers, squash rules | Pending |
 | 6 | Compact planning guidance | 120–220 | Cohesion, size accounting, generated output, exception and plan requirements | Pending |
@@ -64,6 +64,11 @@ and actual unit sizes will be recorded here.
   commit failure; hooks changing files require reverification. Commit approval
   remains explicit, Git state is reported separately, and historical statuses
   remain valid. Whitespace and lifecycle-reference review passed.
+- Unit 3: checkpoint policy now covers unit boundaries, blockers, and handoff
+  using four fields. Check scheduling distinguishes focused iteration, full
+  affected-module verification, and documentation-only checks. Required but
+  unavailable checks remain blocked pending explicit risk acceptance;
+  inapplicable checks are explained. Policy and whitespace review passed.
 
 ## Compounding review
 
@@ -71,7 +76,7 @@ Pending: review observed signals before closing the task.
 
 ## Resume checkpoint
 
-- Position: Unit 2 verified; Unit 3 next.
-- Verified: Work/Git state and archival scenarios; whitespace check passed.
-- Next action: Reduce checkpoints and define verification scheduling.
+- Position: Unit 3 verified; Unit 4 next.
+- Verified: Checkpoint and verification scheduling scenarios; whitespace passed.
+- Next action: Shorten Go Style while preserving local conventions.
 - Blocker: None.
